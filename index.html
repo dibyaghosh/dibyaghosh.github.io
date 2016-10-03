@@ -96,7 +96,49 @@ layout: landing
 							</ul>
 						</div>
 					</section>
-
+<section id="five" class="wrapper style4 special">
+<div class="inner">
+	<header class="major">
+		<h2>Musings</h2>
+		<p> Sometimes, I like writing small articles about topics that I find interesting. <br />
+		Here are the latest ones: to see more, check out the following <a> </a> </p>
+	</header>
+	<ul class="features">
+	{% for post in site.posts  offset: 0 limit: 6 %}	
+		<li class="icon fa-file-text">
+			<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+			 <p><small><strong>{{ post.date | date: "%B %e, %Y" }}</strong> </small></p>	
+			<p>{{post.description}}</p>
+		</li>		
+{% endfor %}	
+		</ul>
+		</div>
+</section>
+<section id="six" class="wrapper special style2">
+<div class="inner">
+<header class="major">
+		<h2 class="width:100%">My Publications</h2>
+	</header>
+	</div>
+						<section class="spotlight">
+							<div class="image"><img src="images/pic01.jpg" alt="" /></div><div class="content">
+								<h2>Data Science Visualizations</h2>
+								<p></p>
+							</div>
+						</section>
+						<section class="spotlight">
+							<div class="image"><img src="images/pic02.jpg" alt="" /></div><div class="content">
+								<h2>Theory Meets Data</h2>
+								<p>Theory Meets Data is a textbook that I'm co-writing, in use for Berkeley's <i> Stat 88 </i>: Probability and Mathematical Statistics in Data Science course. </p>
+							</div>
+						</section>
+						<section class="spotlight">
+							<div class="image"><img src="images/pic03.jpg" alt="" /></div><div class="content">
+								<h2>Tumour Angiogenesis</h2>
+								<p>Over the course of the last semester, I've been involved with Berkeley's growing Data Science program. Last semester, I developed materials for <i> Data 8</i>, a course designed for freshman to begin pursuing data science. This semester, I'm helping develop a probability course for data science. </p>
+							</div>
+						</section>
+					</section>
 				<!-- CTA -->
 					<section id="cta" class="wrapper style4">
 						<div class="inner">
@@ -111,4 +153,8 @@ layout: landing
 
 							</ul>
 						</div>
+
 					</section>
+
+
+
