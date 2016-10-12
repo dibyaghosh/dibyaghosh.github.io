@@ -9,6 +9,9 @@ $baseurl: '{{ site.baseurl }}/images';
 @import 'libs/mixins';
 @import 'font-awesome.min.css';
 @import url('http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic');
+@import 'https://fonts.googleapis.com/css?family=Roboto+Slab:100,300';
+@import 'https://fonts.googleapis.com/css?family=Arvo|Lato:300';
+
 
 /*
 	Spectral by HTML5 UP
@@ -29,7 +32,7 @@ $baseurl: '{{ site.baseurl }}/images';
 	@include skel-layout((
 		reset: 'full',
 		boxModel: 'border',
-		grid: ( gutters: 1.5em )
+		grid: ( gutters: 1.0em )
 	));
 
 /* Basic */
