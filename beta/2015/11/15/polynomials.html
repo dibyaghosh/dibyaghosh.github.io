@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--
+  Original Design: Spectral by HTML5 UP
+    html5up.net | @n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+  Jekyll build mod
+-->
+<html>
+
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dibya Ghosh</title>
+  <meta name="description" content="I’ve been reading up on polynomials and their properties lately, and a certain question caught my eye .">
+  <!--[if lte IE 8]><script src="/beta/js/ie/html5shiv.js"></script><![endif]-->
+  <link rel="canonical" href="http://dibya.xyz/beta/2015/11/15/polynomials.html">
+  <link rel="stylesheet" href="/beta/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/beta/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/beta/css/ie9.css" /><![endif]-->
+  <link rel="alternate" type="application/rss+xml" title="<img src='https://dibya.xyz/images/logo.png' style='height:100%'> </img>" href="http://dibya.xyz/beta/feed.xml">
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+</head>
+
+
+  <body>
+
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
+
+      <!-- Header -->
+<header id="header">
+  <h1><a href="/beta/index.html"><img src='https://dibya.xyz/images/logo.png' style='height:100%'> </img></a></h1>
+  <nav id="nav">
+    <ul>
+      <li class="special">
+        <a href="#menu" class="menuToggle"><span>Menu</span></a>
+        <div id="menu">
+          <ul>
+            <li><a href="/">Home</a></li>
+            
+            
+            <li><a href="/beta/aboutme.html">About Me</a></li>
+            
+            
+            
+            
+            
+            <li><a href="/beta/elements.html">Projects</a></li>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+          </ul>
+          <ul class="actions vertical">
+                <li><a href="#" class="button special">Resume</a></li>
+                <li><a href="#" class="button">Github</a></li>
+                <li><a href="#" class="button">LinkedIn</a></li>
+
+              </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+      <article id="main">
+
+  <header>
+    <h2>Interpolating Polynomials</h2>
+    <p>Using adaptive queries to interpolate any integer polynomial in 2 or less queriescd</p>
+  </header>
+
+  <section class="wrapper style5">
+    <div class="inner">
+      <p>I’ve been reading up on polynomials and their properties lately, and a certain question caught my eye .</p>
+
+<blockquote>
+  <p>Adam and Betty are playing a game related to guessing polynomials. Adam has thought up a polynomial (no limit on degrees) with all positive integer coefficients, which we call P(x). Betty can ask for the values of the polynomial at any integer x, and using only this information, she must discern what Adam’s polynomial is. What is the maximum number of queries that Betty will have to make?</p>
+</blockquote>
+
+<p>Your first inclination might be that the number of queries depends on the degree of the polynomial, but I’ll make the claim that Betty will only require 2 guesses to guess Adam’s polynomial. The key step that allows us to discern an nth degree polynomial in constant queries is a process called adaptive querying. By using the result of the first query, we can determine a value x, which will allow us to extract the values of the coefficients, no matter the degree of  the polynomial.</p>
+<h6 id="the-game-of-adaptive-queries">The Game of Adaptive Queries</h6>
+
+<p>Let’s find a strategy so that it will only take 2 queries to solve the problem. We can represent Adam’s polynomial as,</p>
+
+<script type="math/tex; mode=display">p(x) = a\_0 + a\_1x + a\_2x^2 + \dots + a\_nx^n</script>
+
+<p>where $a_0, a_1, a_2 \dots a_n$  represent the coefficients of the numbers. Notice the similarity between the formula for this polynomial, and the representation of a number in base_x. For instance, a number given as $a_1a_0$ in base 10 can be rewritten as $a_0 + 10*a_1$. Similarly, a number written as $a_2a_1a_0$ in base 5 can be rewritten as $a_0 + a_1(5)^2 + a_2(5)^3$.Since the coefficients of Adam’s coefficients are all positive, his polynomial is analogous as rewriting a number from base $x$.</p>
+
+<script type="math/tex; mode=display">a\_0 + a\_1x + a\_2x^2 + \dots + a\_{n-1}x^{n-1} + a\_nx^n = a\_na\_{n-1} \dots a\_2a\_1a\_0 ~~(base x)</script>
+
+<p>We must be careful though, since this property will only hold when x is larger than all of the coefficients (otherwise we might have carrying over, which distorts the data). How do we pick $x$ then? We now must find a way to find the value of the highest possible coefficient. Notice that $P(1)$ is simply $a_0 + a_1 + a_2 + \dots + a_n$, which is always greater than or equal to the largest coefficient (since all coefficients are positive). Taking x to be $P(1)+1$ guarantees that we now have a base that will properly encode the values of the coefficients. The final step remains to convert this number to base $x+1$.</p>
+
+<h6 id="time-to-code">Time to Code</h6>
+
+<p>To summarize the previous paragraph, our strategy is to first query for $P(1)$, then $P(~P(1) +1~) $</p>
+
+<p>I’ll be coding this example in Python: the choice of language is arbitrary, so feel free to use whatever language suits your fancy. Some structural code: the function <em>make_polynomial</em> creates a polynomial f(x) whose coefficients are that of the list that you passed in, and the function <em>tobase</em> converts a number into certain base (outputs a list of digits).</p>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_polynomial</span><span class="p">(</span><span class="n">coefficients</span><span class="p">):</span>  
+	<span class="s">"""Given a list of coefficients: [a0, a1, a2, ... an], returns a polynomial
+		function which computes the value of the polynomial at any given x"""</span>
+	<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+		<span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coefficients</span><span class="p">):</span>
+			<span class="n">value</span> <span class="o">+=</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="p">)</span> 
+		<span class="k">return</span> <span class="n">value</span>
+	<span class="k">return</span> <span class="n">f</span>
+
+<span class="k">def</span> <span class="nf">tobase</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">num</span><span class="p">):</span>
+	<span class="s">""" Converts a num to base x"""</span>
+	<span class="n">coefficients</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">while</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="n">coeff</span> <span class="o">=</span> <span class="n">num</span> <span class="o">%</span> <span class="n">x</span>
+		<span class="n">coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+		<span class="n">num</span> <span class="o">=</span> <span class="n">num</span> <span class="o">//</span> <span class="n">x</span>
+	<span class="k">return</span> <span class="n">coefficients</span>
+</code></pre>
+</div>
+<p>Our strategy is now quite simple:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">guess_coefficients</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+	<span class="s">""" Given a polynomial function p, finds its coefficients """</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+	<span class="n">num</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">tobase</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h4 id="taking-it-further">Taking it Further</h4>
+
+<p>Now let’s look at a variant of this problem, except a tad harder:</p>
+
+<blockquote>
+  <p>Adam has now thought of a polynomial (of nth degree), whose coefficients are real numbers. Betty can ask for the values of the polynomial at any integer x, and using only this information, she must discern what Adam’s polynomial is. What is the maximum number of queries that Betty will have to make?</p>
+</blockquote>
+
+<p>Now the coefficients are no longer positive integers, so our base-changing strategy will no longer work. So let’s start afresh: simple intuition leads us to believe that it should take n+1 points to determine this new polynomial. After all, a 0 degree polynomial ($y=a_0$) is uniquely identified by one point, and a 1 degree polynomial (a line $y = a_0 + a_1x$) by 2 points. Let’s try to put mathematics behind this intuition:</p>
+
+<p><strong>Theorem: A polynomial of degree $n$ is uniquely identified by $n+1$ points</strong></p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Let $P_n$ represent the set of all polynomials with real coefficients up to degree n</p>
+
+<p>Let T be a linear transformation given by</p>
+
+<script type="math/tex; mode=display">T(P) = \begin{bmatrix} P(0) \cr P(1) \cr P(2) \cr \vdots \cr P(N) \end{bmatrix}</script>
+
+<p>Our goal is to prove that the linear transformation $T(p)$ is an injection from the set of polynomials to $R^{n+1}$. In other words, any polynomial can be represented by a unique vector in $R^{n+1}$</p>
+
+<p>First let us observe the kernel of this transformation. Remember that the kernel of a tranformation is a subset of the domain which maps to the zero element of the codomain. The only polynomial in $P_n$ that maps to the zero vector is $0$, since $T(0) =  \begin{bmatrix} P(0) \cr P(1) \cr P(2) \cr \vdots \cr P(N) \end{bmatrix} $ leads to the zero vector, $\begin{bmatrix} 0 \cr 0 \cr 0 \cr \vdots \cr 0 \end{bmatrix} $. Since the polynomial $ p(x) = 0$ is the only element that maps to zero, we can consider the kernel (null space) to be trivial. By definition, since the kernel is trivial, the transformation is injective, and our theorem is proven.</p>
+
+
+    </div>
+  </section>
+
+</article>
+
+
+      <!-- Footer -->
+<footer id="footer">
+  <ul class="icons">
+    
+    
+    
+    <li><a target="_blank" href="https://twitter.com/djgvolt" class="icon fa-twitter"
+           ><span class="label">twitter</span></a></li>
+    
+    
+    
+    
+    
+    <li><a target="_blank" href="https://github.com/dibyaghosh" class="icon fa-github"
+           ><span class="label">github</span></a></li>
+    
+    
+    
+    
+    
+    <li><a target="_blank" href="https://linkedin.com/in/dibyaghosh" class="icon fa-linkedin-square"
+           ><span class="label">linkedin-square</span></a></li>
+    
+    
+    
+    
+    
+    <li><a target="_blank" href="https://facebook.com/dibyaghosh0" class="icon fa-facebook-official"
+           ><span class="label">facebook-official</span></a></li>
+    
+    
+    
+    
+    
+    <li><a target="_blank" href="https://plus.google.com/u/0/+dibyaghosh0" class="icon fa-google-plus-square"
+           ><span class="label">google-plus-square</span></a></li>
+    
+    
+    
+  </ul>
+  <ul class="copyright">
+    <li>&copy; 
+    
+      
+      2015,
+    
+    2016
+    Dibya Ghosh</li>
+    <li>Built with: <a href="http://jekyllrb.com" target="_blank">Jekyll</a></li>
+  </ul>
+</footer>
+
+
+      <!-- Scripts -->
+<script src="/beta/js/jquery.min.js"></script>
+<script src="/beta/js/jquery.scrollex.min.js"></script>
+<script src="/beta/js/jquery.scrolly.min.js"></script>
+<script src="/beta/js/skel.min.js"></script>
+<script src="/beta/js/util.js"></script>
+<!--[if lte IE 8]><script src="/beta/js/ie/respond.min.js"></script><![endif]-->
+<script src="/beta/js/main.js"></script>
+
+
+    </div>
+
+  </body>
+
+</html>

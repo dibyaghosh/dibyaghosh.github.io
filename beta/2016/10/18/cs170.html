@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</head>
+<p style="display:none">
+$$\def\RR{\mathbb{R}}$$
+</p>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<link rel="stylesheet" href="/beta/css/tufte.css">
+<article>
+ <h1 id="tufte-css">Maximum Flow</h1>
+ <p class="subtitle"> Dibya Ghosh </p>
+ <p> October 18, 2016
+</p>
+<div class="epigraph">
+<blockquote>
+    <p>Analyzing and extending the Edmonds-Karp Algorithm</p>
+    </blockquote>
+</div>
+      <h2> Ford-Fulkerson Algorithm </h2>
+
+<p>The Ford-Fulkerson method is a greedy algorithm that computes the maximum flow in a given network. It is often called a <em>“method”</em> because the exact approach to selecting augmenting paths isn’t well defined (a definition we’ll see later in the <em>Edmonds-Karp</em> algorithm).</p>
+
+<h3> Main Idea </h3>
+
+<p>Consider a graph in which we’re attempting to find the max-flow from start vertex $s$ to end vertex $t$; As long as there is a path from the source node $t$, we send flow along one of the paths, of size of the smallest capacity on the path (leaving a residual network). Continuing to do so until no path exists, leaves only the maximum flow on the graph.</p>
+
+<h3> The Code </h3>
+
+<pre> <code>
+def FFFlow(graph,s,t):
+	f[edge] = 0 forall edges
+	while existsPositivePath(s,t):
+		path = getPositivePath(graph,s,t)
+		minFlow = min(capacity of path)
+		for edge in path:
+			f[edge] += minFlow
+			graph.capacity[edge] -= minFlow
+	return f
+</code></pre>
+
+<p>Here, we have that <em>getPositivePath</em> returns a path (if one exists) in the graph, such that the minimum capacity is greater than 0.</p>
+
+<p>The general gist is that at every iteration, we pick a path with positive flow and append it to our current flow.</p>
+
+<h3> Runtime Analysis </h3>
+
+<h3> Proof of Correctness </h3>
+
+<h2> Edmonds-Karp Algorithm </h2>
+
+<p>Pick the $s-t$ path in the newtork with the fewest edges (using BFS)</p>
+
+<p>The Edmonds-Karp algorithm is an extension of the Ford-Fulkerson method for calculating the maximum flow in a network in time $O(VE^2)$</p>
+
+<h3> Analysis </h3>
+
+<p>We will show that the number of iterations required for this to converge is <span>​<script type="math/tex">\leq EV</script></span>. We do show by showing that the distance (number of edges) of t from s in residual network increases at least every $E$ iterations.</p>
+
+<p>Before doing so, we consider a Linear Program which models Maximum Flow (this is a very bad linear program in practice, but it provides insight into the process)</p>
+
+<p>Let <strong>P</strong> be the set of all paths that go from $s$ to $t$. Recall that we can formulate the max-flow problem as maximizing the sum of flow that goes through each path (assuming each is distinct).</p>
+
+<script type="math/tex; mode=display">\max \sum_{p} f_p</script>
+
+<p>Constrained by <script type="math/tex">\forall e \in E \sum_{p \in P ~s.t.~~ e \in p} f_p \leq c_e</script></p>
+
+
+</article>
+</html>

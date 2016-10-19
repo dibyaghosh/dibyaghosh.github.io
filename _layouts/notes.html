@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</head>
+<p style="display:none">
+$$\def\RR{\mathbb{R}}$$
+$$\def\Exp{\mathbb{E}}$$
+</p>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<link rel="stylesheet" href="{{ "/css/tufte.css" | prepend: site.baseurl }}">
+<article>
+ <h1 id="tufte-css">{{ page.title }}</h1>
+ <p class="subtitle"> Dibya Ghosh </p>
+ <p> {{ page.date | date: '%B %d, %Y' }}
+</p>
+<div class="epigraph">
+<blockquote>
+    <p>{{page.description}}</p>
+    </blockquote>
+</div>
+      {{ content }}
+</article>
+  <style>
+  .MJXc-display {
+  	display: inline;
+  	font-size: 130%;
+  }
+  </style>
+</html>

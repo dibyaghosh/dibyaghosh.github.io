@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+</head>
+<p style="display:none">
+$$\def\RR{\mathbb{R}}$$
+</p>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<link rel="stylesheet" href="/beta/css/tufte.css">
+<article>
+ <h1 id="tufte-css">Machine Learning Abstractions</h1>
+ <p class="subtitle"> Dibya Ghosh </p>
+ <p> September 07, 2016
+</p>
+<div class="epigraph">
+<blockquote>
+    <p>Developing general tools for dealing with various machine learning models</p>
+    </blockquote>
+</div>
+      <p>We often write our input <em>data</em> as $x_1 \dots x_n \in \RR^d$. Our standard for writing <em>labels</em> $y_1 \dots y_n$ differs dependent on the type of question.</p>
+
+<ul>
+  <li>In <em>Unsupervised Learning</em>: the labels are not given</li>
+  <li>In <em>Classification</em>, the labels in ${0,1}$</li>
+  <li>In <em>Multi-class classification</em>, the labels are in ${0,1 \dots k-1}$</li>
+  <li>In <em>Regression</em>, the labels are in $\RR$
+\end{enumerate}</li>
+</ul>
+
+<p>We define a model as a function $F: X \to Y$. It’s corresponding \textit{optimization problem} can be given by 
+<script type="math/tex">\min_{model} \text{Risk + }\lambda * \textbf{Model Capacity}</script> where $\lambda$ is the regularization parameter. The algorithms to optimize include</p>
+
+<ul>
+  <li>Gradient Descent</li>
+  <li>Stochastic Gradient Descent</li>
+  <li>Singular Value Decomposition <label for="svd" class="margin-toggle sidenote-number"></label><input type="checkbox" id="svd" class="margin-toggle" /><span class="sidenote"> SVD involves much more intense optimization of matrices </span></li>
+</ul>
+
+<h2> Risk </h2>
+
+<p>Oftentimes when optimizing a model,we aren’t attempting to minimize the largest loss, but rather attempting the minimize the <em>average</em> loss. Given a loss function $loss(prediction,y)$, we can construct the risk function as follows 
+<script type="math/tex">R[w] = \Exp[loss] = \int loss(pred,y)p(x,y) ~~dx dy</script></p>
+
+<p>However, the issue is that we don’t know $P(x,y)$, the distribution of the data. The only value that we do know is the sample risk</p>
+
+<script type="math/tex; mode=display">R_{s}[w] = \frac{1}{n}\sum_{1}^n loss(pred_i,y_i)</script>
+
+<p>We assume that when $n$ is large, that $R_{s}[w] \approx R[w]$.</p>
+
+<h2> Empirical Risk Minimization </h2>
+
+<p>\textit{Empirical Risk Minimization} is the process of minimizing the sample risk $R_s[w]$, in the hopes that this translates to a low risk model.</p>
+
+<p>We define the \textbf{Training Error} $ err_t = \frac{# Incorrect Examples}{# Training Examples}$.</p>
+
+<p>Further, we define the \textbf{Prediction Error} $err_p$ to be the error rate on unseen data. Notice that if we assume an infinite amount of possible data (from the model), then $err_p = R[w]$</p>
+
+<p>Finally, we define the \textbf{Generalization Error} to be the difference in the prediction error and the training error.  $err_g = err_p - err_t$.</p>
+
+<p>With this notation, we can see that</p>
+
+<p>\begin{center}
+	Prediction Error = Generalization Error  + Training Error
+	<script type="math/tex">R[w] = (R[w] - R_s[w]) + R_s[w]</script>
+\end{center} 
+Prediction Error = Generalization Error 
+\section{Losses and Regularizations}</p>
+
+<p>Common Losses for classification</p>
+
+<p>\begin{enumerate}
+	\item Hinge Loss is $L = \max (1 - yw^Tx, 0)$
+	\item Least Squares Loss is $L = (1 - yw^Tx)^2 = (y - w^Tx)^2$
+	\item Logistic Regression Loss is $L = -yx + \log( exp(-w^Tx) + exp(w^Tx))$
+\end{enumerate}</p>
+
+<p>For \textit{regression}, the loss is often $(y - w^Tx)^2$</p>
+
+<p>Common Regularizations are the $l_0, l_1, l_2$ metrics.</p>
+
+<p>\section{Maximum Likelihood Estimation}</p>
+
+<p>Consider a model of the data which believes that there is some generative model of a given type with parameters $\Theta$ from which we sample $(x,y)$ pairs.</p>
+
+<p>Our goal is to maximize the probability that the model outputted the values ${(y_i,x_i)}_{i \in N}$. That is, we are trying to maximize
+<script type="math/tex">\max_\Theta P[\{(y_i,x_i)\} | \Theta]</script>.</p>
+
+<p>In order to simplify calculations, we assume that the samples are independent, giving us</p>
+
+<script type="math/tex; mode=display">\max_\Theta \prod_{i=1}^n P(x_i,y_i | \Theta)</script>
+
+<p>In order to further simplify (and since probabilities aren’t always concave), we often take the log-likelihood (since most functions are log-convex). Thus, this is equivalent to maximizing
+<script type="math/tex">\max_\Theta \sum \log P(x_i,y_i | \Theta)</script></p>
+
+<p>\section{Nonlinear Decision Boundaries}</p>
+
+<p>The easiest way to create nonlinear decision boundaries is to create more featues, thus lifting the data into a higher dimension.</p>
+
+<p>For example, we can add a bias term by considering the new vector $[ x~~1]^T$ given some vector $x$. We can add features (for example, adding all pairwise interactions between variables). However, this can be very costly, since transforming into a new feature space takes on the order of $O(nd’)$.</p>
+
+</article>
+</html>
