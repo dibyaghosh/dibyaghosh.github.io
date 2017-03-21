@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+
+<body>
+
+    <nav id="menu" class="menu">
+      <header>
+        <section class="menu-section">
+          <h3 class="menu-section-title">Menu</h3>
+          <ul class="menu-section-list">
+              <li><a class="page-link" href="/">Home</a>
+              <li><a class="page-link" href="/blog">Blog</a></li>
+              <li><a class="page-link" href="/projects">Projects</a></li>
+              <li><a class="page-link" href="/research">Research</a></li>
+              <li><a class="page-link" href="/about">About</a></li>
+          </ul>
+        </section>
+      </header>
+    </nav>
+    
+
+    <main id="panel">
+      <div class="page-content">
+        <div class="wrapper container">
+          <header>
+            <nav class="site-header">
+              <div class="row">
+                <div class="menu-toggle"><button class="toggle-button"><i class="icon fa fa-bars"></i></button></div>
+                <div class="icon-wrapper left">
+                  <a href="http://labs.dibya.xyz"><i class="icon fa fa-flask"></i></a>
+                </div>
+                <div class="site-title"><a href="/">Dibya Ghosh</a></div>
+                <div class="icon-wrapper right"><a href="/search/"><i class="fa fa-search"></i></a></div>
+              </div>
+              <div class="desktop-menu">
+                <ul>
+                    <li><a href="/blog">Projects</a></li>
+                    <li><a href="/projects">Teaching</a></li>
+                    <li><a href="/photography">Blog</a></li>
+                    <!--li><a href="/research">Research</a></li-->
+                    <li><a href="/about">About</a></li>
+                </ul>
+              </div>
+            </nav>
+          </header>
+
+
+          {{content}}
+
+        </div>
+
+      </div>
+
+      <div class="invisible-divider"></div>
+      <footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="six columns">
+        <ul class="contact-list">
+          <li>Dibya Ghosh</li>
+          <li><a href="/about/#contact">dibya (at) {berkeley} (dot) edu</a></li>
+          <li class="social-links">
+            <a href="https://twitter.com/OlivierPieters" target="_blank">
+                <i class="icon ion-social-twitter"></i>
+            </a>
+            <a href="https://be.linkedin.com/in/opieters" target="_blank">
+                <i class="icon ion-social-linkedin"></i>
+            </a>
+            <a href="https://github.com/opieters" target="_blank">
+                <i class="icon ion-social-github"></i>
+            </a>
+            <a href="https://keybase.io/opieters" target="_blank">
+                <i class="icon ion-key"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="six columns">
+        <p class="site-description">
+            Site designed by Dibya Ghosh<br/>
+            Modified from Olivier Pieters. <br />
+            Built with <i> Jekyll. 
+            <a rel="license" href="/about/#license">©&nbsp;2017</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </main>
+
+  </body>
+
+</html>

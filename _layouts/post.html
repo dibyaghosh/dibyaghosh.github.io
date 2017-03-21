@@ -1,17 +1,38 @@
----
-layout: default
----
-<article id="main">
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>  {{page.title}} </title>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script src="/js/template.v1.js"></script>
 
-  <header>
-    <h2>{{ page.title }}</h2>
-    <p>{{page.description}}</p>
-  </header>
+</head>
 
-  <section class="wrapper style5">
-    <div class="inner">
-      {{ content }}
-    </div>
-  </section>
+<script type="text/front-matter">
+  title: Dibya Ghosh's Blog
+  description: Yo
+  authors:
+  - Dibya Ghosh: http://dibya.xyz
+  affiliations:
+  - UC Berkeley:
+  githubUrl: dibyaghosh
+</script>
 
-</article>
+
+<dt-article>
+  <h1>{{page.title}}</h1> 
+  <h2>{{page.description}}</h2>
+<br />
+{{ content }}
+
+</dt-article>
+
+<dt-appendix>
+</dt-appendix>
+

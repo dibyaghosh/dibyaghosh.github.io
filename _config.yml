@@ -1,59 +1,20 @@
-# Welcome to Jekyll!
-#
-
-# Site settings
-title: <img src='https://dibya.xyz/images/logo.png' style='height:100%'> </img>
-description: |
-  Hi! My name is <b> Dibya Ghosh </b> <br />
-  I'm a student at UC Berkeley interested in AI and ML.<br />
-   Welcome to my Lair!
-owner: Dibya Ghosh # or company name
-first_published: 2015 # if migrating another site, the year of your first publish
-email: djgvolt@gmail.com
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://dibya.xyz" # the base hostname & protocol for your site
-social:
-  twitter: https://twitter.com/djgvolt
-  github: https://github.com/dibyaghosh
-  linkedin-square: https://linkedin.com/in/dibyaghosh
-  facebook-official: https://facebook.com/dibyaghosh0
-  google-plus-square: https://plus.google.com/u/0/+dibyaghosh0
-  #email: /contact/
-  #flickr:
-  #instagram:
-  #youtube-square:
-  #spotify:
-  #stack-overflow:
-  #vimeo:
-  #reddit:
-  #stubleupon:
-  #delicious:
-  #pied-piper:
-  #digg:
-  #soundcloud:
-  #deviantart:
-  #angellist:
-  #tumblr-square:
-  #stackexchange:
-  #weibo:
-  #trello:
-  #foursquare:
-  #linux:
-  #bitbucket-square:
-  #vk:
-  #slack:
-  #vine:
-  #weixin:
-  #yelp:
-  #skyatlas:
-  #leanpub:
-  #connectdevelop:
-  #ils:
-  #forumbee:
-  #tripadvisor:
-  #amazon:
-
-# Build settings
+permalink: /posts/:title
 markdown: kramdown
-#sass:
-#  style: compressed
+
+gems:
+  - jekyll-sitemap
+
+name: Dibya Ghosh
+url: http://dibya.xyz
+description: yo
+
+collections:
+  ml:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: ml
+    values:
+      layout: post
