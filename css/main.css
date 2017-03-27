@@ -1309,3 +1309,7 @@ code {
       display: block;
     margin: auto auto;
 }
+
+.resume-heading {
+  text-align: left;
+}

@@ -11,10 +11,17 @@ description: yo
 collections:
   ml:
     output: true
+  math:
+    output: true
 
 defaults:
   - scope:
       path: ""
       type: ml
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: math
     values:
       layout: post

@@ -2,6 +2,8 @@
 layout: post
 title: "TensorFlow: A Beginner's Guide"
 description: A simple guide from linear regression to convolutional neural networks in Tensorflow
+date: January 05, 2017
+featured: true
 ---
 
 ## What is TensorFlow?
