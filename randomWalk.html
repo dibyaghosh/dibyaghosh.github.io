@@ -11,12 +11,24 @@
 
 <link rel="stylesheet" href="">
 <link href="https://fonts.googleapis.com/css?family=Lato:300|Open+Sans" rel="stylesheet">
-<script src="js/convnet-min.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Bootstrap default import -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- MathJax Config -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End MathJAX -->
+
+
 <style>
 body {
     background-color: #141e2a;
@@ -78,51 +90,29 @@ pre code {
 </head>
 <body>
 <div class="container">
-<h1 class="mt-4" id="title"> Convex Hull</h1>
+<h1 class="mt-4" id="title"> Random Walks</h1>
 <div class="row">
-    <a class="button col-md-5" id="startVis" onclick="startVisualization();">Start Random Walk</a>
-    <div class="col-md-2"></div>
-    <a class="button col-md-5" onclick="started=false;" >Stop Random Walk</a>
+    <a class="button col-md-4" id="startVis" onclick="startVisualization();">Start Random Walk</a>
+    <div class="col-md-1"></div>
+    <a class="button col-md-2" id="startVis" onclick="delay=120-delay;">Toggle Speed</a>
+    <div class="col-md-1"></div>
+    <a class="button col-md-4" onclick="started=false;" >Stop Random Walk</a>
 </div>
 <div class="row mt-4">
 <div id="visualization" class="col-md-8">
 </div>
 <div id="psuedocode" class="col-md-4">
-<p> The <b> Convex Hull </b> of a set of points is the smallest convex polygon that contains the set of points;
-finding such a polygon is one of the primary questions in the field of computational geometry. </p>
+<p> The <b> Lattice Random Walk </b> is a statistical model, where at every step in time, a particle either goes right 1 unit, or left by 1 unit.
+Here, we show an example of the results of such a random walk after a certain number of timesteps, and provide a derivation.
+ </p>
 
-<p> The algorithm presented here is the <a href="https://en.wikipedia.org/wiki/Gift_wrapping_algorithm"> Gift Wrapping Algorithm </a>,
-which is a slow yet intuitive way of computing the convex hull. The algorithm has three components, each performed sequentially</p>
-<ol>
-    <li> Find the topmost point in your set (with the highest Y-coordinate). This will be the starting point for our polygon</li>
-    <li> Now, considering all the lines that go from Point 1 to all the other points, choose the line that makes the smallest 
-        angle with the positive X-axis. We now have our first side of the polygon </li>
-    <li> At each step after, we consider the set of all lines that go from our new point to all other points. We choose the line
-        which makes the smallest angle with the previous line (intuitively, this minimization envelopes our points in the polygon).
-        We continue to do so until we reach our initial point, at which point we have a polygon.
+<p> Here, we derive the probability that a ball ends up in position $x$ after $t$ time-steps (notice that each y-level is a timestep).
+    Let $x_i$ be the direction that the ball went on the $i$-th timestep, we have $x_i = \begin{cases} 1 & p = 0.5 \\ -1 & p = 0.5 \end{cases}$
+    $$X = \sum_{i=1}^t x_i$$
 
-</ol>
-
-<pre><code>
-def findConvexHull(points):
-    points = []
-
-    firstPoint = min(points,key=y-coordinate)
-    points.append(firstPoint)
-
-    x_axis = vector([1,0])
-    secondPoint = min(points, \
-                key=angle(point-firstPoint, x_axis))
-    points.append(secondPoint)
-
-    while points[-1] != firstPoint:
-        lastPoint = points[-1]
-        lastLine = points[-1] - points[-2]
-        newPoint =  min(points, \
-                key=angle(point-lastPoint, lastLine))
-        points.append(newPoint)
-    return points
-</code></pre>
+    Notice that $x_i = 2*y_i -1 $ (where $y_i \sim \text{Bernoulli}(0.5)$), and so 
+    $$X = 2*Y - T$$
+    where $Y \sim \text{Binomial}(t,0.5)$
 </div>
 </div>
 </div>
@@ -146,9 +136,9 @@ function init_array(size, init_v) {
   return result;
 }
 
-delay = 80;
-var GRID = Math.round(width / 15);
-walk_end = Math.min(height / 2, width * 1.3);
+delay = 20;
+var GRID = Math.round(width / 30);
+walk_end = Math.min(height / 2, width);
 var visualization;
 var result_cnt;
 
@@ -162,7 +152,7 @@ function faster() {
   }
 }
 var xp,yp;
-var POINT_R = GRID / 2;
+var POINT_R = GRID / 3;
 var started = true;
 
 function startVisualization(){
@@ -178,6 +168,16 @@ function startVisualization(){
 PALETTE = ["rgb(247,251,255)", "rgb(222,235,247)", "rgb(198,219,239)",
           "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)",
           "rgb(33,113,181)","rgb(8,81,156)", "rgb(8,48,107)"].reverse();
+
+startColor = [247,251,255];
+endColor = [8,48,107];
+function interpolate(t,s,e){
+    return [t*s[0]+(1-t)*e[0],t*s[1]+(1-t)*e[1],t*s[2]+(1-t)*e[2]];
+}
+
+function arr_to_rgb(arr){
+    return "rgb("+Math.round(arr[0])+","+Math.round(arr[1])+","+Math.round(arr[2])+")";
+}
 
 function walk(x, y){
     var xp,yp = y + GRID;
@@ -218,11 +218,13 @@ function append_result(final_x) {
   if(result_idx < 0 || result_idx >= result_cnt.length) return;
   console.log(result_idx);
   console.log(result_cnt[result_idx]);
+  distance = Math.min(1,2 * POINT_R * (1+ result_cnt[result_idx]) / height);
+  newColor = interpolate(distance,startColor,endColor);
   visualization.append("svg:circle")
     .attr("cx", final_x)
     .attr("cy", walk_end + POINT_R)
     .attr("r", POINT_R)
-    .style("fill", "#3E606F")
+    .style("fill", arr_to_rgb(newColor))
     .transition()
     // Move the result point to the bottom of the plot.
     .attr("cy", height - 2 * POINT_R * (1+ result_cnt[result_idx]) )
