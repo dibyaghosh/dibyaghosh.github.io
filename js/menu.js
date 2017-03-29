@@ -17,5 +17,9 @@ function checkmenu() {
     }
   }
 }
+
+$(document).ready(function(){
 checkmenu();
 window.onresize = checkmenu;
+});
+
