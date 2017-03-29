@@ -12,6 +12,10 @@
 <link rel="stylesheet" href="">
 <link href="https://fonts.googleapis.com/css?family=Lato:300|Open+Sans" rel="stylesheet">
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.5.3/jstat.min.js"></script>
+
+
+
 <!-- Bootstrap default import -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -69,6 +73,10 @@ h1 {
     text-align: center;
 }
 
+.stretch {
+    width: 100%;
+}
+
     .button:hover {
         color:#141e2a !important;
         background-color:white;
@@ -88,6 +96,16 @@ pre code {
 .domain {
     stroke: white;
 }
+
+.dropdown-menu {
+    background-color: transparent;
+    border-color: white;
+}
+
+.dropdown-item {
+    color: white;
+    text-align: center;
+}
 </style>
 
 <!--[if lt IE 9]>
@@ -98,17 +116,47 @@ pre code {
 <link rel="shortcut icon" href="">
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 <h1 class="mt-4" id="title">Sampling from Arbitrary Distributions</h1>
-<div class="row">
-    <a class="button col-md-4" id="startVis" onclick="startVisualization();">Start Sampling</a>
-    <div class="col-md-1"></div>
-    <a class="button col-md-2" id="startVis" onclick="delay=1100-delay;">Toggle Speed</a>
-    <div class="col-md-1"></div>
-    <a class="button col-md-4" onclick="started=false;" >Stop Sampling</a>
-</div>
 <div class="row mt-4">
-<div id="visualization" class="col-md-12">
+    
+<div class="col-md-2" id="explanation">
+    <p> Here, we show how computers generate random samples from arbitrary continuous distributions. </p> <p> The technique is called
+    <b> inverse sampling </b>, and it works by first generating a sample from an Uniform(0,1) distribution, and then uses the invertibility 
+    of the CDF to generate a sample from the initial distribution. If $F^{-1}$ is the inverse CDF, then if $y$ is a random sample from the uniform,
+    then $F^{-1}(y)$ is a sample from the original distribution. </p>
+
+    <p> In this visualization, a circle (our random uniform sample ) starting from the y-axis (our uniform) 
+        travels two paths: one down to the x-axis to form our original distribution, and another to the right to show the uniform distribution.
+        Once you've got the gist, press <i> Toggle Speed </i> and watch the distribution come up</p>
+
+        <b> Note: </b> This visualization best works in landscape (on phone), or on a laptop. 
+</div>
+<div id="visualization" class="col-md-10">
+    <div class="row">
+    <div class="col-md-4">
+    <a class="button stretch" id="startVis" onclick="startVisualization();">Start Sampling</a> </div>
+    <div class="col-md-2">
+    <a class="button stretch" id="startVis" onclick="delay=1050-delay;">Toggle Speed</a>
+    </div>
+<div class="dropdown show col-md-2">
+  <a class="button stretch dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+    Choose Distribution
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" onclick="changeDistribution(0)" href="#">Exponential</a>
+    <a class="dropdown-item" onclick="changeDistribution(1)" href="#">Normal</a>
+    <a class="dropdown-item" onclick="changeDistribution(2)" href="#">Beta</a>
+    <a class="dropdown-item" onclick="changeDistribution(3)" href="#">Gamma</a>
+    <a class="dropdown-item" onclick="changeDistribution(4)" href="#">Uniform</a>
+
+  </div>
+</div>
+    <div class="col-md-4">
+    <a class="button stretch" onclick="started=false;" >Stop Sampling</a>
+    </div>
+</div>
 </div>
 
 </div>
@@ -119,6 +167,7 @@ pre code {
 <!-- Example: <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <script>
 var width = $("#visualization").width();
+width = width * .9;
 
 var height = window.innerHeight
 || document.documentElement.clientHeight
@@ -135,15 +184,18 @@ var line = d3.line()
     .x(function(d) { return x(d[0]); })
     .y(function(d) { return y(d[1]); });
 
-var data = []
-function cdf(x){
-    if(x < 0) return 0;
-    return 1 - Math.exp(-x);
-}
+var data = [];
 
-function icdf(y){
-    return -1*Math.log(1-y);
-}
+
+var distributionChoices = [
+    {a:-.25,b: 1.25, func: jStat.exponential(1)},
+    {a:-5,b: 5, func: jStat.normal(0,2)},
+    {a:-.25,b: 1.25, func: jStat.beta(3,5)},
+    {a: 0,b: 10, func: jStat.gamma(3,1)},
+    {a:-.25,b: 1.25, func: jStat.uniform(0,1)},
+];
+
+var currentDistribution = distributionChoices[0];
 
 function init_array(size, init_v) {
   var result = [];
@@ -153,24 +205,27 @@ function init_array(size, init_v) {
   return result;
 }
 
-function start_data(){
-    for(var x = -.25; x < 5; x += .05){
-        data.push([x,cdf(x)]);
+function populate_data(){
+    var a = currentDistribution.a, b = currentDistribution.b;
+    data = [];
+    step = (b-a) / 100;
+    for(var x = a; x < b; x += step){
+        data.push([x,currentDistribution.func.cdf(x)]);
     }
 }
-start_data();
+populate_data();
 x.domain(d3.extent(data, function(d) { return d[0]; }));
 y.domain(d3.extent(data, function(d) { return d[1]; }));
 var x_domain = d3.extent(data, function(d) { return d[0]; });
 
 
 
-var NUM_BINS = 40;
+var NUM_BINS = 20;
 var NUM_BINS2 = 10;
 var visualization;
 var result_cnt,result_cnt2;
 var delay = 1000;
-var POINT_R = width / NUM_BINS / 5;
+var POINT_R = Math.max(8,width / NUM_BINS / 10);
 
 var xp,yp;
 var started = false;
@@ -196,10 +251,10 @@ function arr_to_rgb(arr){
 
 function append_result() {
     var y_value = Math.random();
-    var x_value = icdf(y_value);
+    var x_value = currentDistribution.func.inv(y_value);
     var x_width = x_domain[1] - x_domain[0];
   var result_idx = Math.round((x_value - x_domain[0]) / x_width * NUM_BINS);
-  var result_idy = Math.round(y_value * NUM_BINS2);
+  var result_idy = Math.floor(y_value * NUM_BINS2);
 
   console.log(result_idx);
   console.log(result_cnt[result_idx]);
@@ -212,13 +267,15 @@ function append_result() {
 distance2 = Math.min(1,2 * POINT_R * (1+ result_cnt2[result_idy]) / width);
 
   newColor = interpolate(distance,startColor,endColor);
+    newColor2 = interpolate(distance2,startColor,endColor);
+
   visualization.append("svg:circle")
     .attr("cx", x(x_domain[0]))
     .attr("cy", y(y_value))
     .attr("r", POINT_R)
     .style("fill", arr_to_rgb(newColor))
-    .transition().duration(1000).attr("cx",x(result_idx*x_width/NUM_BINS + x_domain[0]))
-    .transition()
+    .transition().duration(1000).attr("cx",x(x_value))
+    .transition().attr("cx",x(result_idx*x_width/NUM_BINS + x_domain[0]))
     // Move the result point to the bottom of the plot.
     .attr("cy", height - 2 * POINT_R * (1+ result_cnt[result_idx]) )
     .duration(1000);
@@ -226,12 +283,12 @@ distance2 = Math.min(1,2 * POINT_R * (1+ result_cnt2[result_idy]) / width);
      visualization.append("svg:circle")
     .attr("cx", x(x_domain[0]))
     .attr("cy", y(y_value))
-    .attr("r", POINT_R)
-    .style("fill", arr_to_rgb(newColor))
-    .transition().duration(1000).attr("cx",x(result_idx*x_width/NUM_BINS + x_domain[0]))
+    .attr("r", POINT_R/2)
+    .style("fill", arr_to_rgb(newColor2))
+    .transition().duration(1000).attr("cx",x(x_value))
     .transition()
     // Move the result point to the bottom of the plot.
-    .attr("cx", width - 2 * POINT_R * (1+ result_cnt2[result_idy]) )
+    .attr("cx", width - 2 * POINT_R * (1+ result_cnt2[result_idy])/2 )
     .attr("cy",  y(result_idy/NUM_BINS2))
 
     .duration(1000);
@@ -248,6 +305,19 @@ distance2 = Math.min(1,2 * POINT_R * (1+ result_cnt2[result_idy]) / width);
 
 var margin = {top: 30, right: 20, bottom: 30, left: 50};
 
+function restart(){
+    started = false;
+    populate_data();
+    x.domain(d3.extent(data, function(d) { return d[0]; }));
+    y.domain(d3.extent(data, function(d) { return d[1]; }));
+    d3.select("svg").remove();
+    initialize();
+}
+
+function changeDistribution(n){
+        currentDistribution = distributionChoices[n];
+        restart();
+}
 function initialize(){	
 	result_cnt = init_array(NUM_BINS, 0);
     result_cnt2 = init_array(NUM_BINS2, 0);
