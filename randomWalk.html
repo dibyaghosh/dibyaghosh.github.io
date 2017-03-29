@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="">
+<link href="https://fonts.googleapis.com/css?family=Lato:300|Open+Sans" rel="stylesheet">
+<script src="js/convnet-min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<style>
+body {
+    background-color: #141e2a;
+    font-family: -apple-system, "Helvetica Neue", "Lucida Grande";
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 3em;
+}
+
+#title {
+    text-align: center;
+    z-index: 999;
+}
+
+		.points{
+			fill:#3E606F;
+		}
+		polyline, .ray{
+			fill:none;
+			stroke-width:3;
+			stroke:red;
+			stroke-opacity:0.5;
+		}
+		.sweepline{
+			stroke: #91AA9D;
+        }
+
+.button {
+    color:white;
+    border:1px solid white;
+    padding:1em 2em;
+    display:inline-block;
+    margin:0.5em 0;
+    text-align: center;
+}
+
+    .button:hover {
+        color:#141e2a !important;
+        background-color:white;
+        text-decoration:none;
+    }
+
+pre code {
+    color: white !important ;
+}
+
+</style>
+
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="shortcut icon" href="">
+</head>
+<body>
+<div class="container">
+<h1 class="mt-4" id="title"> Convex Hull</h1>
+<div class="row">
+    <a class="button col-md-5" id="startVis" onclick="startVisualization();">Start Random Walk</a>
+    <div class="col-md-2"></div>
+    <a class="button col-md-5" onclick="started=false;" >Stop Random Walk</a>
+</div>
+<div class="row mt-4">
+<div id="visualization" class="col-md-8">
+</div>
+<div id="psuedocode" class="col-md-4">
+<p> The <b> Convex Hull </b> of a set of points is the smallest convex polygon that contains the set of points;
+finding such a polygon is one of the primary questions in the field of computational geometry. </p>
+
+<p> The algorithm presented here is the <a href="https://en.wikipedia.org/wiki/Gift_wrapping_algorithm"> Gift Wrapping Algorithm </a>,
+which is a slow yet intuitive way of computing the convex hull. The algorithm has three components, each performed sequentially</p>
+<ol>
+    <li> Find the topmost point in your set (with the highest Y-coordinate). This will be the starting point for our polygon</li>
+    <li> Now, considering all the lines that go from Point 1 to all the other points, choose the line that makes the smallest 
+        angle with the positive X-axis. We now have our first side of the polygon </li>
+    <li> At each step after, we consider the set of all lines that go from our new point to all other points. We choose the line
+        which makes the smallest angle with the previous line (intuitively, this minimization envelopes our points in the polygon).
+        We continue to do so until we reach our initial point, at which point we have a polygon.
+
+</ol>
+
+<pre><code>
+def findConvexHull(points):
+    points = []
+
+    firstPoint = min(points,key=y-coordinate)
+    points.append(firstPoint)
+
+    x_axis = vector([1,0])
+    secondPoint = min(points, \
+                key=angle(point-firstPoint, x_axis))
+    points.append(secondPoint)
+
+    while points[-1] != firstPoint:
+        lastPoint = points[-1]
+        lastLine = points[-1] - points[-2]
+        newPoint =  min(points, \
+                key=angle(point-lastPoint, lastLine))
+        points.append(newPoint)
+    return points
+</code></pre>
+</div>
+</div>
+</div>
+<!-- Place your content here -->
+
+<!-- SCRIPTS -->
+<!-- Example: <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<script>
+var width = $("#visualization").width();
+
+var height = window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+height= height*.8;
+
+function init_array(size, init_v) {
+  var result = [];
+  for (i = 0; i < size; i += 1) {
+    result.push(init_v);
+  }
+  return result;
+}
+
+delay = 80;
+var GRID = Math.round(width / 15);
+walk_end = Math.min(height / 2, width * 1.3);
+var visualization;
+var result_cnt;
+
+
+function faster() {
+  if (delay > 20) {
+    delay -= 20;
+  } else {
+    delay = 0;
+    $('#startVis').attr('disabled', true);
+  }
+}
+var xp,yp;
+var POINT_R = GRID / 2;
+var started = true;
+
+function startVisualization(){
+    xp = Math.round(width/2);
+    yp = 0;
+
+      window.setTimeout(function() {
+            walk(xp, yp);
+    }, delay);
+    started = true;
+}
+
+PALETTE = ["rgb(247,251,255)", "rgb(222,235,247)", "rgb(198,219,239)",
+          "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)",
+          "rgb(33,113,181)","rgb(8,81,156)", "rgb(8,48,107)"].reverse();
+
+function walk(x, y){
+    var xp,yp = y + GRID;
+    xp = x + GRID*(2*Math.round(Math.random())-1);
+    line = visualization.select('line'+ 
+                    '[x1="' + x + '"]'+
+                    '[x2="' + xp + '"]'+
+                    '[y1="' + y + '"]'+
+                    '[y2="' + yp + '"]');
+    if(line.empty()){
+        visualization.append("svg:line")
+      .attr("x1", x)
+      .attr("y1", y)
+      .attr("x2", xp)
+      .attr("y2", yp)
+      .style("stroke", PALETTE[0])
+      .style("stroke-width", 2)
+      .datum(0);
+    } else {
+        var color_idx = Math.min(line.datum() + 1, PALETTE.length - 1);
+        line.style('stroke', PALETTE[color_idx])
+            .datum(color_idx);
+    }
+    if(yp >= walk_end){
+        append_result(xp);
+        xp = Math.round(width/2);
+        yp = 0;
+    }
+    if(started){
+    window.setTimeout(function() {
+    walk(xp, yp);
+    }, delay);
+    }
+}
+
+function append_result(final_x) {
+  var result_idx = Math.round(final_x / GRID);
+  if(result_idx < 0 || result_idx >= result_cnt.length) return;
+  console.log(result_idx);
+  console.log(result_cnt[result_idx]);
+  visualization.append("svg:circle")
+    .attr("cx", final_x)
+    .attr("cy", walk_end + POINT_R)
+    .attr("r", POINT_R)
+    .style("fill", "#3E606F")
+    .transition()
+    // Move the result point to the bottom of the plot.
+    .attr("cy", height - 2 * POINT_R * (1+ result_cnt[result_idx]) )
+    .duration(1000);
+  result_cnt[result_idx] += 1;
+}
+
+
+function initialize(){	
+	result_cnt = init_array(width / GRID, 0);
+    $('#startVis').attr('disabled', false);
+	visualization = d3.select("#visualization").append("svg").attr("width",width).attr("height",height);
+}
+
+initialize();
+</script>
+
+</body>
+
+
+</html>
