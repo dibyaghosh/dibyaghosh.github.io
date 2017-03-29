@@ -103,7 +103,7 @@ pre code {
 <div class="row">
     <a class="button col-md-4" id="startVis" onclick="startVisualization();">Start Sampling</a>
     <div class="col-md-1"></div>
-    <a class="button col-md-2" id="startVis" onclick="delay=500-delay;">Toggle Speed</a>
+    <a class="button col-md-2" id="startVis" onclick="delay=1100-delay;">Toggle Speed</a>
     <div class="col-md-1"></div>
     <a class="button col-md-4" onclick="started=false;" >Stop Sampling</a>
 </div>
@@ -166,9 +166,10 @@ var x_domain = d3.extent(data, function(d) { return d[0]; });
 
 
 var NUM_BINS = 40;
+var NUM_BINS2 = 10;
 var visualization;
-var result_cnt;
-var delay = 100;
+var result_cnt,result_cnt2;
+var delay = 1000;
 var POINT_R = width / NUM_BINS / 5;
 
 var xp,yp;
@@ -198,14 +199,18 @@ function append_result() {
     var x_value = icdf(y_value);
     var x_width = x_domain[1] - x_domain[0];
   var result_idx = Math.round((x_value - x_domain[0]) / x_width * NUM_BINS);
+  var result_idy = Math.round(y_value * NUM_BINS2);
+
   console.log(result_idx);
   console.log(result_cnt[result_idx]);
   if(result_idx < 0 || result_idx >= result_cnt.length) {
     append_result();
     return;
   };
-
+  console.log(result_idy);
   distance = Math.min(1,2 * POINT_R * (1+ result_cnt[result_idx]) / height);
+distance2 = Math.min(1,2 * POINT_R * (1+ result_cnt2[result_idy]) / width);
+
   newColor = interpolate(distance,startColor,endColor);
   visualization.append("svg:circle")
     .attr("cx", x(x_domain[0]))
@@ -217,7 +222,22 @@ function append_result() {
     // Move the result point to the bottom of the plot.
     .attr("cy", height - 2 * POINT_R * (1+ result_cnt[result_idx]) )
     .duration(1000);
+
+     visualization.append("svg:circle")
+    .attr("cx", x(x_domain[0]))
+    .attr("cy", y(y_value))
+    .attr("r", POINT_R)
+    .style("fill", arr_to_rgb(newColor))
+    .transition()
+    // Move the result point to the bottom of the plot.
+    .attr("cx", width - 2 * POINT_R * (1+ result_cnt2[result_idy]) )
+    .attr("cy",  y(result_idy/NUM_BINS2))
+
+    .duration(1000);
+
   result_cnt[result_idx] += 1;
+    result_cnt2[result_idy] += 1;
+
   if(started){
     window.setTimeout(function() {
     append_result();
@@ -229,6 +249,8 @@ var margin = {top: 30, right: 20, bottom: 30, left: 50};
 
 function initialize(){	
 	result_cnt = init_array(NUM_BINS, 0);
+    result_cnt2 = init_array(NUM_BINS2, 0);
+
     $('#startVis').attr('disabled', false);
 	visualization = d3.select("#visualization").append("svg")
         .attr("width", width + margin.left + margin.right)
