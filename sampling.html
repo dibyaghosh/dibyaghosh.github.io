@@ -117,7 +117,7 @@ pre code {
 </head>
 <body>
 <div class="container-fluid">
-<h1 class="mt-4" id="title">Sampling from Arbitrary Distributions</h1>
+<h1 class="mt-4" id="title">Sampling from Continuous Distributions</h1>
 <div class="row mt-4">
     
 <div class="col-md-2" id="explanation">
@@ -126,11 +126,13 @@ pre code {
     of the CDF to generate a sample from the initial distribution. If $F^{-1}$ is the inverse CDF, then if $y$ is a random sample from the uniform,
     then $F^{-1}(y)$ is a sample from the original distribution. </p>
 
-    <p> In this visualization, a circle (our random uniform sample ) starting from the y-axis (our uniform) 
-        travels two paths: one down to the x-axis to form our original distribution, and another to the right to show the uniform distribution.
+    <p> In this visualization, a circle (our random uniform sample ) starts from the y-axis and  
+        travels two paths: one down to the x-axis to form our original distribution, and another straight ahead to form a uniform distribution.
         Once you've got the gist, press <i> Toggle Speed </i> and watch the distribution come up</p>
 
-        <b> Note: </b> This visualization best works in landscape (on phone), or on a laptop. 
+        <p> <b> Note: </b> This visualization best works on wide screens, so if you're on mobile, try landscape. </p> 
+
+        <p> Thanks to Andy Palan for testing the visualizations and providing feedback! </p> 
 </div>
 <div id="visualization" class="col-md-10">
     <div class="row">
@@ -337,9 +339,10 @@ function initialize(){
       .call(d3.axisLeft(y))
     .append("text")
       .attr("fill", "#FFF")
-      .attr("transform", "rotate(-90)")
+      .attr("transform", "rotate(0)")
       .attr("y", 6)
-      .attr("dy", "2em")
+      .attr("dx", "5em")
+      .attr("font-size", "1.5em")
       .attr("text-anchor", "end")
       .text("P(X < x)");
 

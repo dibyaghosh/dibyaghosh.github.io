@@ -6,25 +6,6 @@ title: "Blog"
 I like to write about interesting tidbits that pop up in my life, classes or research.
 <div class="divider"></div>
 
-
-
-<h1 class="page-heading">Featured Articles</h1>
-<div class="row">
-  
-      {% for page in site.ml %}
-       <div class="six columns">
-    
-    <h2><a class="post-link" href="{{page.url}}">{{ page.title }}</a></h2>
-    <p>
-{{ page.description | markdownify }} 
-
-    </p>
-  </div>
-    {% endfor %}
-
-</div>
-<div class="divider"></div>
-
 <h1 class="page-heading">Machine Learning</h1>
 <div class="row">
   
@@ -32,6 +13,9 @@ I like to write about interesting tidbits that pop up in my life, classes or res
        <div class="six columns">
     
     <h2><a class="post-link" href="{{page.url}}">{{ page.title }}</a></h2>
+    <div class="post-meta">
+            <span>{{page.date | date_to_long_string}}</span>
+          </div>
     <p>
 {{ page.description | markdownify }} 
 
@@ -47,8 +31,10 @@ I like to write about interesting tidbits that pop up in my life, classes or res
   
       {% for page in site.math %}
        <div class="six columns">
-    {{page.date}}
     <h2><a class="post-link" href="{{page.url}}">{{ page.title }}</a></h2>
+    <div class="post-meta">
+            <span>{{page.date | date_to_long_string}}</span>
+          </div>
     <p>
 {{ page.description | markdownify }} 
 

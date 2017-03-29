@@ -65,75 +65,40 @@ in new pursuits. </p>
       
     {% for page in site.ml %}
       <h4> <a href="{{page.url}}"> {{ page.title }} </a></h4>
+               <div class="post-meta">
+            <span>{{page.date | date_to_long_string}}</span>
+          </div>
       <small> {{ page.description | markdownify }} </small>
     {% endfor %}
     
     </div>
     <div class="six columns">
-      <h1 class="page-heading">Favorite Readings</h1>
+      <h1 class="page-heading">Visualizations</h1>
       <ul class="older-post-list">
   
   
   
         <li>
-          <h2><a class="post-link-small" href="/blog/2016/10/07/vps-resources">VPS Resources</a></h2>
+          <h2><a class="post-link-small" href="/hull">Finding the Convex Hull</a></h2>
           <div class="post-meta">
-            <span>7 October 2016</span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/vps" class="no-link-style">VPS</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/email" class="no-link-style">email</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/debian" class="no-link-style">Debian</a></span>
-            
+            <span>28 March 2017</span>
           </div>
         </li>
-  
-  
-  
-        <li>
-          <h2><a class="post-link-small" href="/blog/2016/09/09/defining-new-latex-macros">Defining New LaTeX Macros</a></h2>
+
+                <li>
+          <h2><a class="post-link-small" href="/randomWalk">Random Walks</a></h2>
           <div class="post-meta">
-            <span>9 September 2016</span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/macro" class="no-link-style">macro</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/latex" class="no-link-style">LaTeX</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/command" class="no-link-style">command</a></span>
-            
+            <span>28 March 2017</span>
           </div>
         </li>
-  
-  
-  
-        <li>
-          <h2><a class="post-link-small" href="/blog/2016/08/23/using-css3-counters-for-figure-table-and-numbering">Using CSS3 Counters for Figure and Table Numbering</a></h2>
+
+                <li>
+          <h2><a class="post-link-small" href="/sampling">Sampling from Continuous Distributions</a></h2>
           <div class="post-meta">
-            <span>23 August 2016</span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/jekyll" class="no-link-style">Jekyll</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/liquid" class="no-link-style">Liquid</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/css" class="no-link-style">CSS</a></span>
-            
+            <span>29 March 2017</span>
           </div>
         </li>
-  
-  
-  
-        <li>
-          <h2><a class="post-link-small" href="/blog/2016/08/10/latex-preamble">A Basic LaTeX Preamble</a></h2>
-          <div class="post-meta">
-            <span>10 August 2016</span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/latex" class="no-link-style">LaTeX</a></span>
-            
-              <span class="project-tag"><a href="/blog/archive/tag/preamble" class="no-link-style">preamble</a></span>
-            
-          </div>
-        </li>
+
   
   
 </ul>
