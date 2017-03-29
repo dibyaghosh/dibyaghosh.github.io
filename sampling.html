@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<title></title>
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="">
+<link href="https://fonts.googleapis.com/css?family=Lato:300|Open+Sans" rel="stylesheet">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<!-- Bootstrap default import -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- MathJax Config -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End MathJAX -->
+
+
+<style>
+body {
+    background-color: #141e2a;
+    font-family: -apple-system, "Helvetica Neue", "Lucida Grande";
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 3em;
+}
+
+#title {
+    text-align: center;
+    z-index: 999;
+}
+
+		.points{
+			fill:#3E606F;
+		}
+		polyline, .ray{
+			fill:none;
+			stroke-width:3;
+			stroke:red;
+			stroke-opacity:0.5;
+		}
+		.sweepline{
+			stroke: #91AA9D;
+        }
+
+.button {
+    color:white;
+    border:1px solid white;
+    padding:1em 2em;
+    display:inline-block;
+    margin:0.5em 0;
+    text-align: center;
+}
+
+    .button:hover {
+        color:#141e2a !important;
+        background-color:white;
+        text-decoration:none;
+    }
+
+pre code {
+    color: white !important ;
+}
+
+.axiss text, line{
+    color: white;
+    fill: white;
+    stroke: white;
+}
+
+.domain {
+    stroke: white;
+}
+</style>
+
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="shortcut icon" href="">
+</head>
+<body>
+<div class="container">
+<h1 class="mt-4" id="title">Sampling from Arbitrary Distributions</h1>
+<div class="row">
+    <a class="button col-md-4" id="startVis" onclick="startVisualization();">Start Sampling</a>
+    <div class="col-md-1"></div>
+    <a class="button col-md-2" id="startVis" onclick="delay=500-delay;">Toggle Speed</a>
+    <div class="col-md-1"></div>
+    <a class="button col-md-4" onclick="started=false;" >Stop Sampling</a>
+</div>
+<div class="row mt-4">
+<div id="visualization" class="col-md-12">
+</div>
+
+</div>
+</div>
+<!-- Place your content here -->
+
+<!-- SCRIPTS -->
+<!-- Example: <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<script>
+var width = $("#visualization").width();
+
+var height = window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+height= height*.8;
+
+var x = d3.scaleLinear()
+    .rangeRound([0, width]);
+
+var y = d3.scaleLinear()
+    .rangeRound([height/2, 0]);
+
+var line = d3.line()
+    .x(function(d) { return x(d[0]); })
+    .y(function(d) { return y(d[1]); });
+
+var data = []
+function cdf(x){
+    if(x < 0) return 0;
+    return 1 - Math.exp(-x);
+}
+
+function icdf(y){
+    return -1*Math.log(1-y);
+}
+
+function init_array(size, init_v) {
+  var result = [];
+  for (i = 0; i < size; i += 1) {
+    result.push(init_v);
+  }
+  return result;
+}
+
+function start_data(){
+    for(var x = -.25; x < 5; x += .05){
+        data.push([x,cdf(x)]);
+    }
+}
+start_data();
+x.domain(d3.extent(data, function(d) { return d[0]; }));
+y.domain(d3.extent(data, function(d) { return d[1]; }));
+var x_domain = d3.extent(data, function(d) { return d[0]; });
+
+
+
+var NUM_BINS = 40;
+var visualization;
+var result_cnt;
+var delay = 100;
+var POINT_R = width / NUM_BINS / 5;
+
+var xp,yp;
+var started = false;
+
+function startVisualization(){
+    started = true;
+    append_result();
+}
+
+PALETTE = ["rgb(247,251,255)", "rgb(222,235,247)", "rgb(198,219,239)",
+          "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)",
+          "rgb(33,113,181)","rgb(8,81,156)", "rgb(8,48,107)"].reverse();
+
+startColor = [247,251,255];
+endColor = [8,48,107];
+function interpolate(t,s,e){
+    return [t*s[0]+(1-t)*e[0],t*s[1]+(1-t)*e[1],t*s[2]+(1-t)*e[2]];
+}
+
+function arr_to_rgb(arr){
+    return "rgb("+Math.round(arr[0])+","+Math.round(arr[1])+","+Math.round(arr[2])+")";
+}
+
+function append_result() {
+    var y_value = Math.random();
+    var x_value = icdf(y_value);
+    var x_width = x_domain[1] - x_domain[0];
+  var result_idx = Math.round((x_value - x_domain[0]) / x_width * NUM_BINS);
+  console.log(result_idx);
+  console.log(result_cnt[result_idx]);
+  if(result_idx < 0 || result_idx >= result_cnt.length) {
+    append_result();
+    return;
+  };
+
+  distance = Math.min(1,2 * POINT_R * (1+ result_cnt[result_idx]) / height);
+  newColor = interpolate(distance,startColor,endColor);
+  visualization.append("svg:circle")
+    .attr("cx", x(x_domain[0]))
+    .attr("cy", y(y_value))
+    .attr("r", POINT_R)
+    .style("fill", arr_to_rgb(newColor))
+    .transition().duration(1000).attr("cx",x(result_idx*x_width/NUM_BINS + x_domain[0]))
+    .transition()
+    // Move the result point to the bottom of the plot.
+    .attr("cy", height - 2 * POINT_R * (1+ result_cnt[result_idx]) )
+    .duration(1000);
+  result_cnt[result_idx] += 1;
+  if(started){
+    window.setTimeout(function() {
+    append_result();
+    }, delay);
+  }
+}
+
+var margin = {top: 30, right: 20, bottom: 30, left: 50};
+
+function initialize(){	
+	result_cnt = init_array(NUM_BINS, 0);
+    $('#startVis').attr('disabled', false);
+	visualization = d3.select("#visualization").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+
+    visualization.append("g").attr('class','axiss')
+      .attr("transform", "translate(0," + height/2 + ")")
+      .call(d3.axisBottom(x));
+    visualization.append("g").attr('class','axiss')
+      .call(d3.axisLeft(y))
+    .append("text")
+      .attr("fill", "#FFF")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "2em")
+      .attr("text-anchor", "end")
+      .text("P(X < x)");
+
+        visualization.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
+}
+
+initialize();
+</script>
+
+</body>
+
+
+</html>
