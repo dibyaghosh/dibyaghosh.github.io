@@ -228,6 +228,7 @@ distance2 = Math.min(1,2 * POINT_R * (1+ result_cnt2[result_idy]) / width);
     .attr("cy", y(y_value))
     .attr("r", POINT_R)
     .style("fill", arr_to_rgb(newColor))
+    .transition().duration(1000).attr("cx",x(result_idx*x_width/NUM_BINS + x_domain[0]))
     .transition()
     // Move the result point to the bottom of the plot.
     .attr("cx", width - 2 * POINT_R * (1+ result_cnt2[result_idy]) )
