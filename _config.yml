@@ -5,7 +5,8 @@ gems:
   - jekyll-sitemap
 
 name: Dibya Ghosh
-url: http://dibya.xyz
+url: https://dibya.xyz
+enforce_ssl: dibya.xyz
 description: yo
 
 collections:

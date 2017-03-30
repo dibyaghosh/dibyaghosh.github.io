@@ -1,4 +1,9 @@
 <head>    <meta charset="utf-8">
+<script type="text/javascript">
+    var host = "yoursite.com";
+    if ((host == window.location.host) && (window.location.protocol != "https:"))
+        window.location.protocol = "https";
+</script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -7,6 +12,7 @@
     {% endif %}
     {{ site.name }}</title>
     <meta name="description" content="Dibya Ghosh's Personal Website'">
+  <link rel="canonical" href=" { { site.url } }{ { page.url } }" />
 
     <link type="text/css" rel="stylesheet" href="/css/main.css">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -14,28 +20,7 @@
     <link rel="canonical" href="https://dibya.xyz/">
     <link type="text/css" rel="stylesheet" href="/css/fira_font.css">
 
- <!--   <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicons/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicons/apple-touch-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicons/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicons/apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicons/apple-touch-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicons/apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicons/apple-touch-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicons/apple-touch-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon-180x180.png">
-<link rel="icon" type="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/assets/favicons/android-chrome-36x36.png" sizes="36x36">
-<link rel="icon" type="image/png" href="/assets/favicons/android-chrome-48x48.png" sizes="48x48">
-<link rel="icon" type="image/png" href="/assets/favicons/android-chrome-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/assets/favicons/android-chrome-144x144.png" sizes="144x144">
-<link rel="icon" type="image/png" href="/assets/favicons/android-chrome-192x192.png" sizes="192x192">
-<link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96">
-<link rel="icon" type="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
--->
-
-<!-- <link rel="manifest" href="/assets/favicons/manifest.json">
-<link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg">
---> <link rel="shortcut icon" href="favicon.ico">
+ <link rel="shortcut icon" href="favicon.ico">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
 <script type="text/javascript" src="/js/menu.js"></script>
