@@ -312,6 +312,8 @@ function restart(){
     populate_data();
     x.domain(d3.extent(data, function(d) { return d[0]; }));
     y.domain(d3.extent(data, function(d) { return d[1]; }));
+    x_domain = d3.extent(data, function(d) { return d[0]; });
+
     d3.select("svg").remove();
     initialize();
 }

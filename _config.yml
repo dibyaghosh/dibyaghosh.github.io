@@ -3,6 +3,7 @@ markdown: kramdown
 
 gems:
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 name: Dibya Ghosh
 url: https://dibya.xyz
