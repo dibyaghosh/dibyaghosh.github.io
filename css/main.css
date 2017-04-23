@@ -213,7 +213,7 @@ pre {
  * Site header
  */
 .site-header {
-  margin-top: 20px;
+  margin-top: 1em;
   margin-bottom: 20px; }
   @media screen and (min-width: 550px) {
     .site-header {
@@ -259,10 +259,13 @@ pre {
     width: 80%;
     font-size: 32px;
     letter-spacing: -1px;
-    text-align: center; }
+    text-align: center;
+    padding-top: 3em; }
     @media screen and (min-width: 550px) {
       .site-header .site-title {
-        font-size: 46px; } }
+        font-size: 46px;
+        padding-top: 1em; } }
+    
     .site-header .site-title a {
       color: #000; }
       .site-header .site-title a:visited {
@@ -376,6 +379,8 @@ pre {
  * Page content
  */
 .page-heading {
+  margin-top: 2em;
+  margin-bottom: 2em;
   font-size: 20px; }
 
 .tag-tree {
@@ -623,8 +628,8 @@ height
   clear: both; }
 
 .divider, .invisible-divider {
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 3em;
+  margin-bottom: 2em;
   border-top: 1px solid whitesmoke; }
   .divider .invert, .invisible-divider .invert {
     border-top: 1px solid #fdfdfd; }
@@ -1318,11 +1323,13 @@ code {
   align:center;
       display: block;
     margin: auto auto;
+      margin-top: 3em;
+
 }
 
 @media screen and (min-width: 800px) {
 #profile_picture {
-  margin-top: 3em;
+  margin-top: 7em;
 }
 }
 .resume-heading {
