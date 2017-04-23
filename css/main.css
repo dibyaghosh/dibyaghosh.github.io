@@ -1,4 +1,7 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Dosis|Raleway');
+
+
 /**
  * Reset some basic elements
  */
@@ -8,16 +11,22 @@ dl, dd, ol, ul, figure {
   margin: 0;
   padding: 0; }
 
+.site-title {
+    font-family: 'Raleway', sans-serif;
+}
+
 /**
  * Basic styling
  */
-body {
+body, .page-content{
   font-family: Fira Sans, Helvetica, Arial, sans-serif;
   font-size: 16px;
+  font-weight: 200;
   line-height: 1.5;
   color: #111;
-  background-color: #fdfdfd;
-  -webkit-text-size-adjust: 100%; }
+  background-color: #fff;
+  -webkit-text-size-adjust: 100%; 
+  }
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
@@ -280,7 +289,7 @@ pre {
               margin-right: 10px; }
             .site-header .desktop-menu ul li a {
               color: #000;
-              font-weight: 600; }
+              font-weight: 200; }
               .site-header .desktop-menu ul li a:hover {
                 text-decoration: none;
                 color: gray; } }
@@ -1311,6 +1320,15 @@ code {
     margin: auto auto;
 }
 
+@media screen and (min-width: 800px) {
+#profile_picture {
+  margin-top: 3em;
+}
+}
 .resume-heading {
   text-align: left;
+}
+
+.prof-summary {
+  margin-top: 2em;
 }

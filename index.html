@@ -14,9 +14,10 @@ title: "Dibya Ghosh"
 <b>Computer Science</b> and <b>Statistics</b>. My <a href="/research">research interests</a> 
 are primarily in machine learning and theoretical statistics, although I'm always interested 
 in new pursuits. </p>
-<p> I'm heavily invested in Berkeley's upcoming Data Science Initiative. This year, I'm developing, designing, and teaching the pilot course of <a href="https://prob140.org"> Prob140: Probability for Data Science</a></p>
+<p> I'm heavily invested in Berkeley's upcoming Data Science Initiative. This year, I'm developing, designing, 
+  and teaching the pilot course of <a href="https://prob140.org"> Stat 140: Probability for Data Science </a></p>
 
-<center> <a class="post-link" href="/about">Professional Summary</a> </center>
+<center class="prof-summary"> <a class="post-link " href="/about">Professional Summary</a> </center>
 
       
     </div>
@@ -65,10 +66,9 @@ in new pursuits. </p>
       <h1 class="page-heading">Writings</h1>
       
     {% for page in site.ml %}
-      <h4> <a href="{{page.url}}"> {{ page.title }} </a></h4>
-               <div class="post-meta">
-            <span>{{page.date | date_to_long_string}}</span>
-          </div>
+      <h4> 
+            <span  class="post-meta">{{page.date | date_to_string}}</span> <a href="{{page.url}}"> {{ page.title }} </a></h4>
+
       <small> {{ page.description | markdownify }} </small>
     {% endfor %}
     
@@ -81,23 +81,14 @@ in new pursuits. </p>
   
         <li>
           <h2><a class="post-link-small" href="/hull">Finding the Convex Hull</a></h2>
-          <div class="post-meta">
-            <span>28 March 2017</span>
-          </div>
         </li>
 
                 <li>
-          <h2><a class="post-link-small" href="/randomWalk">Random Walks</a></h2>
-          <div class="post-meta">
-            <span>28 March 2017</span>
-          </div>
+          <h2><a class="post-link-small" href="/randomWalk">Lattice Random Walks</a></h2>
         </li>
 
                 <li>
-          <h2><a class="post-link-small" href="/sampling">Sampling from Continuous Distributions</a></h2>
-          <div class="post-meta">
-            <span>29 March 2017</span>
-          </div>
+          <h2><a class="post-link-small" href="/sampling">Sampling from Distributions</a></h2>
         </li>
 
   
