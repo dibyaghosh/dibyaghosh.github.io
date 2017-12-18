@@ -488,6 +488,9 @@ height
   .container {
     width: 85%;
     padding: 0; } }
+
+.force.six.columns {
+width: 48%; }
 /* For devices larger than 550px */
 @media (min-width: 550px) {
   .container {
