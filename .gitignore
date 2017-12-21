@@ -1,7 +1,7 @@
 # Jekyll ignores
 .sass-cache/
 _site
-
+vendor/
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
