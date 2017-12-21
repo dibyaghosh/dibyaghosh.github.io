@@ -10,33 +10,72 @@ MathJax.Hub.Config({
   <script type="text/javascript" async data-cfasync="false"
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" >
 <script src="/js/template.v1.js"></script>
 
+  <style>
+   .column-to-row-captioned {
+      width: 100%;
+      display: grid;
+      grid-auto-rows: min-content;
+      grid-column-gap: 30px;
+      grid-row-gap: 30px;
+      grid-auto-flow: row;
+   }
+   @media(min-width: 512px) {
+     .column-to-row-captioned {
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+      }
+   }
+   .hmm-grid {
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: 18% 18% 55%;
+      grid-column: page;
+      grid-column-gap: 5%;
+      max-width: 750px;
+   }
+    .figure-math {
+      margin-left: 1em;
+    }
+
+    d-byline {
+      display: none;
+    }
+
+    a.anchor-link {
+      display: none;
+    }
+  </style>
 </head>
 
-<script type="text/front-matter">
-  title: Dibya Ghosh's Blog
-  description: Yo
-  authors:
-  - Dibya Ghosh: http://dibya.xyz
-  affiliations:
-  - UC Berkeley:
-  githubUrl: dibyaghosh
-</script>
-
-<style>
-dt-article ol {
-      margin-left: calc(50% - 984px / 2);
+<d-front-matter>
+<script id="distill-front-matter" type="text/json">
+{ 
+  "title": "{{page.title}}", 
+  "description": "{{page.description}}",
+  "authors": [
+      {"author" : "Dibya Ghosh",
+       "authorURL" : "http://dibyaghosh.com",
+       "affiliation": "UC Berkeley",
+       "affiliationURL" : "http://dibyaghosh.com"}
+    ]
 }
-</style>
-<dt-article>
-  <h1>{{page.title}}</h1> 
-  <h2>{{page.description}}</h2>
-<br />
+</script>
+</d-front-matter>
+
+
+  <d-title>
+    <h1> {{page.title}} </h1> 
+  <p>{{page.description}}</p>
+ </d-title>
+<d-article>
 {{ content }}
 
-</dt-article>
+</d-article>
 
-<dt-appendix>
-</dt-appendix>
+<d-appendix>
+</d-appendix>
 
