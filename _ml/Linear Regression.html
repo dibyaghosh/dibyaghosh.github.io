@@ -1,0 +1,156 @@
+---
+layout: post
+title: "The Linear Regression Treatment"
+description: What's the optimal number of layers in a neural network? One. Welcome to linear regression
+date: December 25, 2017
+featured: true
+---
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<d-code language="python">
+%matplotlib inline
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
+sns.set_context("paper")
+</d-code>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<d-code language="python">
+height_data = pd.read_csv('Galton.csv')
+</d-code>
+
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>Neural networks are all the rage nowadays: the solution to all our problems seem to be to add more layers. This article takes a breath of air away from the hype, and returns to investigate it's roots: linear  regression. Linear regression is a very expansive subject, and many statistics majors can spend their entire undergraduate career within the field. We'll try to do the subject justice (read: this is a long article).</p>
+<h4 id="Part-1:-Linear-Regression-through-Statistical-Decision-Theory">Part 1: Linear Regression through Statistical Decision Theory<a class="anchor-link" href="#Part-1:-Linear-Regression-through-Statistical-Decision-Theory">&#182;</a></h4><ol>
+<li>An Intro to Decision Theory</li>
+<li>Empirical Risk Minimization (ERM)</li>
+<li>ERM with Linear Functions</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Linear-Regression-through-Statistical-Decision-Theory">Linear Regression through Statistical Decision Theory<a class="anchor-link" href="#Linear-Regression-through-Statistical-Decision-Theory">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="An-Intro-to-Decision-Theory">An Intro to Decision Theory<a class="anchor-link" href="#An-Intro-to-Decision-Theory">&#182;</a></h2><p><strong>Regression</strong>, as a subset of <em>supervised learning</em>, is the task of predicting continuous-valued outputs from data. We'd like to find an <em>estimator</em> $\delta(X)$ that <em>best</em> predicts some output $Y$ best from input $X$. To formalize the concept of a "best" estimator, we need to borrow some terms from statistical decision theory.</p>
+<p>The true connection between the random variables $X \in \mathbb{R}^m$ (our input variable) and $Y \in \mathbb{R}$ (our output variable) as a joint  probability distribution $\mathcal{P}(X,Y)$. By writing it stochastically,we capture inherent randomness in the connection between the two variables, and errors in measurement. Machine learning, in a nutshell, is the process of creating an estimator $\delta$ from observed training data $X_{train},Y_{train} \sim \mathcal{P}$</p>
+<p>An estimator $\delta(X)$ of $Y$ incurs a <strong>loss</strong> $L(\delta(X),Y)$, which measures the deviation between the predicted value and the true value. For example, common losses include</p>
+<ul>
+<li>Squared Error Loss: $L(\delta(X),Y) = (\delta(X)-Y)^2$</li>
+<li>Absolute Deviation Loss: $L(\delta(X),Y) = |\delta(X)-Y|$</li>
+</ul>
+<p>Choice of a loss induces the <strong>risk</strong> of an estimator,</p>
+$$R(\delta) = \mathbb{E}_{X,Y \sim \mathcal{P}}[L(\delta(X),Y)]$$<p>Risk can be thought of as the "expected" deviation between the predicted value and the true value of the output. The ideal estimator minimizes the risk, although since we do not know the true probability distribution $\mathcal{P}$, computing this risk is impossible.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Empirical-Risk-Minimization">Empirical Risk Minimization<a class="anchor-link" href="#Empirical-Risk-Minimization">&#182;</a></h2><p>Since computing the true risk is impossible, we consider the <strong>empirical risk</strong> of an estimator instead. This is given by 
+$$R_{emp}(\delta) = \frac1n \sum_{i=1}^n L(\delta(X_i),Y_i))$$</p>
+<p>Here, we use the notation $X_{train} = (X_i)_{i=1}^n$,$Y_{train} = (Y_i)_{i=1}^n$.</p>
+<p>The empirical risk is the average loss on the training data, and can also be interpreted as the true risk under the <em>empirical distribution</em>.</p>
+<p><strong>Empirical Risk Minimization</strong> is the procedure which finds an estimator $\delta_{emp}$ which minimizes the empirical risk as a surrogate for the true risk.
+$$\delta_{emp} = \arg \min_{\delta} R_{emp}(\delta)$$</p>
+<p>Intuitively, this is a sensible idea, because we expect that if we have a lot of data, then the empirical risk of an estimator is roughly equal to the true risk.</p>
+<p><strong>Important Note:</strong> The empirical risk may be very different than the true risk if the distribution of $X_{train},Y_{train}$ is significantly different than the true distribution. This is a very common real-world experience, especially if there was sampling bias in collecting the data.</p>
+<p>We can rewrite the true risk in a way to reveal this structure
+$$
+R(\delta) = \underbrace{R(\delta) - R_{emp}(\delta)}_{\text{Generalization Error}} + \underbrace{R_{emp}(\delta)}_{\text{Empirical Risk}}
+$$</p>
+<p>In order to minimize the true risk, we need to balance between the generalization error and the empirical risk. If a estimator minimizes the empirical risk fully, it may be overfitting to the training data, and exhibit poor generalization. Alternately, one could have an estimator which is equally poor on the true and empirical distributions (and thus have great generalization), but still have very poor loss.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Empirical-Risk-Minimization-with-Linear-Functions">Empirical Risk Minimization with Linear Functions<a class="anchor-link" href="#Empirical-Risk-Minimization-with-Linear-Functions">&#182;</a></h2><p>Consider finding the estimator $\delta_{erm}$ which minimizes the empirical risk amongst all linear functions of the data. In other words, we find the best estimator of form</p>
+$$\delta(x) =w^Tx~~~~~w \in \mathbb{R}^m$$<p>Finding the optimal $\delta$ can be reduced into finding the optimal $w \in \mathbb{R}^m$ which minimizes the empirical risk objective. Note however that the optimal weight vector $w^*$ may not be unique: we'll talk more about this later.</p>
+<p><strong>Empirical Risk Objective</strong> $$w^* = \arg \min_{w \in \mathbb{R}^m} \frac{1}{n} \sum_{i=1}^n (w^TX_i - Y_i)^2$$</p>
+<p>If we define $X = \begin{bmatrix} --X_1-- \\ \vdots \\ --X_n--\end{bmatrix}$ as a $n \times m$ matrix where each row is a data point, and $Y =  \begin{bmatrix} Y_1 \\ \vdots \\ Y_n\end{bmatrix}$ a vector in $\mathbb{R}^n$, then this objective can be written in vector notation as</p>
+$$w^* = \arg \min_{w \in \mathbb{R}^m} \frac{1}{n} \|Xw-Y\|_2^2 = \arg \min_{w \in \mathbb{R}^m} \|Xw-Y\|_2^2$$<p>&lt; TO DO FILL IN &gt;</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Expected-Risks-of-Estimators">Expected Risks of Estimators<a class="anchor-link" href="#Expected-Risks-of-Estimators">&#182;</a></h2><p>When the loss metric is the <em>squared error loss</em>, we can consider the "expected risk" of an estimator over different training sets. Recall that we define the bias of an estimator to be</p>
+$$\text{Bias}(\delta(X)) = \mathbb{E}_{train}[\delta(X)-Y]$$<p>where $\mathbb{E}_{train} = \mathbb{E}_{X_{train},Y_{train} \sim \mathcal{P}}$ refers to the expectation over different training data.</p>
+<p>For convenience sake, we define $\overline{\delta(X)} = \mathbb{E}_{train}[\delta(X)]$.</p>
+$$
+\begin{align*}
+\mathbb{E}_{train}[R(\delta)]
+ &= \mathbb{E}_{train}[\mathbb{E}_{X,Y \sim \mathcal{P}}[L(\delta_{t}(X,Y))]]\\
+ &=  \mathbb{E}_{X,Y \sim \mathcal{P}}[\mathbb{E}_{train}[L(\delta_{t}(X,Y))]]\\
+\end{align*}
+$$<p>Thus, for a general $X$,$Y$</p>
+$$
+\begin{align*}
+\mathbb{E}_{train}[L(\delta(X,Y))]
+&= \mathbb{E}_{train}[(\delta(X)-Y)^2]\\
+&= \mathbb{E}_{train}[(\delta(X)- \overline{\delta(X)}  + \overline{\delta(X)} - Y)^2]\\
+&= \mathbb{E}_{train}\left[(\delta(X)-\overline{\delta(X)} )^2\right] + \mathbb{E}_{train}\left[(\overline{\delta(X)}  - Y)^2\right] + 2\mathbb{E}_{train}\left[(\delta(X)-\overline{\delta(X)} )(\overline{\delta(X)}  - Y)\right]\\
+&= \mathbb{E}_{train}\left[(\delta(X)-\overline{\delta(X)} )^2\right] + (\overline{\delta(X)}  - Y)^2 + 2(\overline{\delta(X)}  - Y)\mathbb{E}_{train}\left[(\delta(X)-\overline{\delta(X)} )\right]\\
+&= Var(\delta(X)) + Bias(\delta(X))^2
+\end{align*}
+$$<p>The expected loss over the training set is a function of the <em>variance</em> of the estimator (how much does the estimator change over different training sets? ), and the <em>bias</em> of the estimator: (on average, how far will the estimator be?) This fundamental decomposition is called the <strong>bias-variance tradeoff</strong></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Finally,-Linear-Regression">Finally, Linear Regression<a class="anchor-link" href="#Finally,-Linear-Regression">&#182;</a></h1><p>Linear regression considers finding the optimal linear estimator with  $\delta(X) = w^TX$.</p>
+
+</div>
+</div>
+</div>
+ 
+
