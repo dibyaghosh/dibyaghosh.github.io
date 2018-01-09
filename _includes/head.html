@@ -1,6 +1,6 @@
 <head>    <meta charset="utf-8">
 <script type="text/javascript">
-    var host = "yoursite.com";
+    var host = "dibyaghosh.com";
     if ((host == window.location.host) && (window.location.protocol != "https:"))
         window.location.protocol = "https";
 </script>
@@ -24,5 +24,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
 <script type="text/javascript" src="/js/menu.js"></script>
-    
+   
+{% if jekyll.environment == 'production' %}
+{% include analytics.html %}
+{% endif %}
+
 </head>
