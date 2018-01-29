@@ -11,7 +11,14 @@ MathJax.Hub.Config({
   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
   <meta name="viewport" content="width=device-width, initial-scale=1" >
-<script src="/js/template.v1.js"></script>
+<script>
+window.addEventListener('WebComponentsReady', function() {
+      console.warn('WebComponentsReady');
+        const loaderTag = document.createElement('script');
+          loaderTag.src = 'https://distill.pub/template.v2.js';
+            document.head.insertBefore(loaderTag, document.head.firstChild);
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.17/webcomponents-loader.js"></script>
 
   <style>
    .column-to-row-captioned {
