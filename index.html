@@ -47,43 +47,14 @@ function myFunction() {
 
 <div class="divider"></div>
 
-<h1 class="page-heading">Featured Projects</h1>
-<div class="row">
-  
-  
-  <div class="six columns">
-    
-    <h2><a class="post-link" href="https://labs.dibya.xyz/bearxiv">Bearχive</a></h2>
-    <p>
-        Bearχive is an automated scraped collection of tests and study guides for UC Berkeley STEM courses, pulling from HKN, TBP, and internal Math databases.
-
-
-    </p>
-
-
-  </div>
-  
-  <div class="six columns">
-    
-    <h2><a class="post-link" href="https://github.com/dibyaghosh/annpod">AnnPod</a></h2>
-    <p>An experiment in large scale Student Performance Analytics: AnnPod is designed to help instructors identify critical topics 
-        by analyzing Piazza contributions and topics through time</p>
-
-
-  </div>
-  
-</div>
-<center> <small>  To see more of my projects, visit the <a href="/projects"> projects page </a> or my <a href="https://github.com/dibyaghosh"> Github</a>. </small> </center>
-
-<div class="divider"></div>
 
           <div class="row">
   
   
     <div class="six columns">
       <h1 class="page-heading">Writings</h1>
-      
-    {% for page in site.ml %}
+      {% assign items = site.ml | sort: 'date' %}
+      {% for page in items reversed limit:6 %}
       <h4> 
             <span  class="post-meta">{{page.date | date_to_string}}</span> <a href="{{page.url}}"> {{ page.title }} </a></h4>
 
@@ -114,6 +85,35 @@ function myFunction() {
 </ul>
 </div>
 </div>
+
+<div class="divider"></div>
+<h1 class="page-heading">Featured Projects</h1>
+<div class="row">
+  
+  
+  <div class="six columns">
+    
+    <h2><a class="post-link" href="https://labs.dibya.xyz/bearxiv">Bearχive</a></h2>
+    <p>
+        Bearχive is an automated scraped collection of tests and study guides for UC Berkeley STEM courses, pulling from HKN, TBP, and internal Math databases.
+
+
+    </p>
+
+
+  </div>
+  
+  <div class="six columns">
+    
+    <h2><a class="post-link" href="https://github.com/dibyaghosh/annpod">AnnPod</a></h2>
+    <p>An experiment in large scale Student Performance Analytics: AnnPod is designed to help instructors identify critical topics 
+        by analyzing Piazza contributions and topics through time</p>
+
+
+  </div>
+  
+</div>
+<center> <small>  To see more of my projects, visit the <a href="/projects"> projects page </a> or my <a href="https://github.com/dibyaghosh"> Github</a>. </small> </center>
 
 
         </div>
