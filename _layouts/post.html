@@ -20,6 +20,9 @@ window.addEventListener('WebComponentsReady', function() {
 });
 </script><script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.17/webcomponents-loader.js"></script>
 
+{% if jekyll.environment == 'production' %}
+{% include analytics.html %}
+{% endif %}
   <style>
    .column-to-row-captioned {
       width: 100%;
