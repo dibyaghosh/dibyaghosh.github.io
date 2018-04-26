@@ -157,11 +157,16 @@
         <tr/>
         </table><br/>
 
-        <table align=center width=1000px>
-          <tr><td width=1000px>
-            <center><a href="resources/teaser.png"><img src = "resources/teaser.png" height="400px"></img></a><br></center>
-          </td></tr>
-        </table>
+        <center id="demoVideo"><h1>Demo Video</h1></center>
+          <table align=center width=600px>
+            <tr><td align=center width=600px>
+                <video width="1000" height="600" controls>
+                    <source src="dnc_video.mp4" type="video/mp4">
+                    <source src="dnc_video.ogv" type="video/ogg">
+                    Your browser does not support the video tag.
+                  </video>
+            </td></tr>
+          </table>
 
         <br>
 
@@ -178,33 +183,18 @@
       <br>
       <hr>
 
-        <center id="demoVideo"><h1>Demo Video</h1></center>
-          <table align=center width=600px>
-            <tr><td align=center width=600px>
-                <video width="600" height="400" controls>
-                    <source src="dnc_video.mp4" type="video/mp4">
-                    <source src="dnc_video.ogv" type="video/ogg">
-                    Your browser does not support the video tag.
-                  </video>
-            </td></tr>
-          </table>
-
       <br>
       <hr>
 
-
-        <center id="sourceCode"><h1>Our Solution</h1></center>
-        We train two convolutional neural networks: the policy and the binary classifier. The two networks
-share their convolutional layers (shown in blue), and have separate fully connected layers (shown in orange and magenta). Our spatial
-attention layer (shown in green) lies between the convolutional layer and the fully connected layer, and forms a major information bottleneck.
-For predicting an action, the robot's state information (joint angles, velocities, end effector position) are also passed into the network. We train the policy using our expert demonstrations and the loss Ltask, while the classifier is trained with the weakly labeled images
-and their binary class labels. For more details, refer to the <a href="resources/iccv17.pdf">paper</a>.
         <table align=center width=1000px>
-          <p style="margin-top:4px;"></p>
           <tr><td width=1000px>
-            <center><a href="resources/method.jpg"><img src = "resources/model.png" height="350px"></img></a><br></center>
+            <center><a href="teaser.png"><img src = "teaser.png" height="400px"></img></a><br></center>
           </td></tr>
         </table>
+
+        <center id="sourceCode"><h1>Our Solution</h1></center>
+        For problems with high initial state variability, we partition the initial state space of the task into contexts using clustering algorithms. We train an ensemble of <i> local </i> policies, each specialized to a particular context. The objective for each policy is to maximize expected reward and minimize the KL divergence from each of the other policies in the ensemble. On a slower timescale, the ensemble is distilled together into a <i> global </i> policy, which can operate on
+        the original task. 
         <br/>
 
       <br>
@@ -214,7 +204,7 @@ and their binary class labels. For more details, refer to the <a href="resources
           <center><h1>Paper</h1></center>
           <tr>
           <td width=400px align=left>
-          <a href="resources/iccv17.pdf"><img style="height:200px" src="resources/thumb.jpg"/></a>
+          <a href="https://arxiv.org/pdf/1711.09874.pdf"><img style="height:200px" src="preview.jpg"/></a>
           <center>
           <span style="font-size:20pt"><a href="https://arxiv.org/pdf/1711.09874.pdf">[Paper PDF]</a>&nbsp;
           <span style="font-size:20pt"><a href="https://arxiv.org/abs/1711.09874">[arXiv]</a>
