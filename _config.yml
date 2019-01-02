@@ -6,8 +6,8 @@ gems:
   - jekyll-redirect-from
 
 name: Dibya Ghosh
-url: https://dibya.xyz
-enforce_ssl: dibya.xyz
+url: https://dibyaghosh.com
+enforce_ssl: dibyaghosh.com
 description: yo
 
 collections:
