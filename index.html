@@ -8,13 +8,13 @@ title: "Dibya Ghosh"
   
   
     <div class="six columns">
-      <h1 class="page-heading">Hi!</h1>
+      <!-- <h1 class="page-heading">Hi!</h1> -->
       
-<p> I'm a third-year student at UC Berkeley, studying 
-<i>Computer Science</i> and <i>Statistics</i>.</p>
+<p> I'm a fourth-year student at UC Berkeley, studying 
+<i>Computer Science</i> and <i>Applied Mathematics</i>.</p>
 
-<p> I work with Sergey Levine in deep reinforcement learning, as well as Ben Brown in interpretable machine learning.</p>
-<p> This spring, I'm teaching <a href="http://prob140.org"> Stat 140: Probability for Data Science </a>, a course I co-developed last year. I've taught Stat 134 previously as well. 
+<p> I conduct ML research. I work with Sergey Levine in deep reinforcement learning, and with Ben Brown in interpretable machine learning.</p>
+<p> I teach probability. Next spring, I'm teaching <a href="http://prob140.org"> Stat 140: Probability for Data Science </a>, a course I co-developed two years ago.
 
 <script>
 function myFunction() {
@@ -29,9 +29,7 @@ function myFunction() {
 </script>
 <p> <span onclick="myFunction()"> <a> A note on my name </a><i class="fa fa-angle-down" aria-hidden="true"></i></span></p>
 <div id='myName' style="display: none"> 
-<p > My first name is Dibya, pronounced `Dibbo` or `Dih-bo`; please don't spell it that way though. </p> 
-  
-  <p> I've had my share of creative pronounciations and spellings before:  Dybia, Deebo, Divya, Daybi,...</p> 
+<p > My first name is pronounced <i>Dibbo</i> or <i>Dih-bo</i>. On legal documentation, I go by <i> Dibya Jyoti </i> Ghosh.</p>
 </div>
 
 <center class="prof-summary"> <h1 class="page-heading"><a class="post-link " href="/about">Professional Summary</a> </h1></center>
@@ -39,7 +37,7 @@ function myFunction() {
       
     </div>
     <div class="six columns">
-            <h1 class="page-heading"> </h1>
+            <!-- <h1 class="page-heading"> </h1> -->
 
         <img src="images/dibya_profile.jpg" id="profile_picture"> </img> 
 </div>
@@ -47,43 +45,24 @@ function myFunction() {
 
 <div class="divider"></div>
 
-<h1 class="page-heading">Featured Projects</h1>
-<div class="row">
-  
-  
-  <div class="six columns">
-    
-    <h2><a class="post-link" href="https://labs.dibya.xyz/bearxiv">Bearχive</a></h2>
-    <p>
-        Bearχive is an automated scraped collection of tests and study guides for UC Berkeley STEM courses, pulling from HKN, TBP, and internal Math databases.
+<h1 class="page-heading">News</h1>
+<ul>
+  <li> Our work on <a href="https://arxiv.org/abs/1811.07819"> actionable representations (ARCs) </a> has been accepted to ICLR 2019.</li>
+  <li> I was chosen as a finalist for the CRA Outstanding Undergraduate Researcher Award</li>
+    <li> Our work on <a href="https://sites.google.com/view/inverse-event">  Variational Inverse Control with Events (VICE)</a> has been accepted to NeurIPS 2018.</li>
+  <li> At <a href="pasc18.pasc-conference.org">PASC 2018</a>, I gave a talk on interpretable generative models for multi-omics data in the <i> Use of AI to Analyze Complex Biological Systems</i> mini-symposium. Slides coming soon! </li>
+  <li> I started a blog called <i> <a href='http://variationalbay.es'>The RL Probabilist</a>.</i> All my <a href="https://variationalbay.es/ml/tensorflow-guide.html">previous</a> <a href="https://variationalbay.es/ml/quickml.html">articles</a> have been transferred there.</li>
+  <li> At <a href="https://iclr.cc/">ICLR 2018</a>, I presented a poster on <a href="https://arxiv.org/abs/1711.09874">Divide-and-Conquer Reinforcement Learning.</a> </li>
 
+</ul>
 
-    </p>
-
-
-  </div>
-  
-  <div class="six columns">
-    
-    <h2><a class="post-link" href="https://github.com/dibyaghosh/annpod">AnnPod</a></h2>
-    <p>An experiment in large scale Student Performance Analytics: AnnPod is designed to help instructors identify critical topics 
-        by analyzing Piazza contributions and topics through time</p>
-
-
-  </div>
-  
-</div>
-<center> <small>  To see more of my projects, visit the <a href="/projects"> projects page </a> or my <a href="https://github.com/dibyaghosh"> Github</a>. </small> </center>
-
-<div class="divider"></div>
-
-          <div class="row">
+          <!-- <div class="row">
   
   
     <div class="six columns">
       <h1 class="page-heading">Writings</h1>
-      
-    {% for page in site.ml %}
+      {% assign items = site.ml | sort: 'date' %}
+      {% for page in items reversed limit:6 %}
       <h4> 
             <span  class="post-meta">{{page.date | date_to_string}}</span> <a href="{{page.url}}"> {{ page.title }} </a></h4>
 
@@ -115,5 +94,34 @@ function myFunction() {
 </div>
 </div>
 
+<div class="divider"></div>
+<h1 class="page-heading">Featured Projects</h1>
+<div class="row">
+  
+  
+  <div class="six columns">
+    
+    <h2><a class="post-link" href="https://labs.dibya.xyz/bearxiv">Bearχive</a></h2>
+    <p>
+        Bearχive is an automated scraped collection of tests and study guides for UC Berkeley STEM courses, pulling from HKN, TBP, and internal Math databases.
 
-        </div>
+
+    </p>
+
+
+  </div>
+  
+  <div class="six columns">
+    
+    <h2><a class="post-link" href="https://github.com/dibyaghosh/annpod">AnnPod</a></h2>
+    <p>An experiment in large scale Student Performance Analytics: AnnPod is designed to help instructors identify critical topics 
+        by analyzing Piazza contributions and topics through time</p>
+
+
+  </div>
+  
+</div>
+<center> <small>  To see more of my projects, visit the <a href="/projects"> projects page </a> or my <a href="https://github.com/dibyaghosh"> Github</a>. </small> </center>
+
+
+        </div> -->

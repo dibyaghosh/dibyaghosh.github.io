@@ -256,7 +256,7 @@ pre {
     margin-right: auto;
     box-sizing: border-box;
     float: left;
-    width: 80%;
+    width: 100%;
     font-size: 32px;
     letter-spacing: -1px;
     text-align: center;
@@ -348,7 +348,9 @@ pre {
  */
 .site-footer {
   border-top: 1px solid #e8e8e8;
-  padding: 30px 0; }
+  padding: 30px 0;
+  font-size: 14px;
+}
   .site-footer .footer-heading {
     font-size: 18px;
     margin-bottom: 15px; }
@@ -357,7 +359,7 @@ pre {
     list-style: none;
     margin-left: 0; }
   .site-footer .footer-col-wrapper {
-    font-size: 15px;
+    font-size: 12px;
     color: #828282;
     margin-left: -15px; }
 
@@ -1321,18 +1323,19 @@ code {
   width: auto; }
 
 #profile_picture {
-  max-width: 70%;
+  max-width: 60%;
   height: auto;
   align:center;
       display: block;
     margin: auto auto;
-      margin-top: 3em;
+     margin-top: 0em;
+     vertical-align: top;
 
 }
 
 @media screen and (min-width: 800px) {
 #profile_picture {
-  margin-top: 7em;
+  padding-top: -1em;
 }
 }
 .resume-heading {
