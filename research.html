@@ -4,35 +4,32 @@ title: "Research Overview"
 ---
 
 <h1 class="page-heading">Research</h1>
-<center>  Here's my <a href="https://scholar.google.com/citations?user=znnl0kwAAAAJ&hl=en&oi=sra">Google Scholar</a>. My <a onclick='alert("Dibya Ghosh -> Ani Adhikari -> Persi Diaconis -> Paul Erdos")'>Erdős number</a> is 3. My Bacon number is lamentably still undefined.  </center>
+<center>  Here's my <a href="https://scholar.google.com/citations?user=znnl0kwAAAAJ&hl=en&oi=sra">Google Scholar</a>. My <a onclick='alert("Dibya Ghosh -> Ani Adhikari -> Persi Diaconis -> Paul Erdos")'>Erdős number</a> is 3. My Bacon number is lamentably still undefined.  Jump to <a href='#preprints'>preprints</a> or <a href='#publications'>publications.</a></center>
+
 
 <div class="divider"></div>
-
-<div class="row">
+<h2 id='preprints' class="page-heading">Preprints</h1>
+  <div class="row">
   
   
     <div class="three columns">
-  <img style="margin-top:3em" src="/images/research/arc.png">
-    </div>
+  <img style="margin-top:0em" src="/images/research/memento.jpg">
+  <table>
+    <tr>
+      <td><a href="https://slideslive.com/38921889/biological-and-artificial-reinforcement-learning-4">Talk</a></td>
+    </tr>
+  </table>    
+</div>
     
     <div class="nine columns">
       
-      <b><a href="https://arxiv.org/abs/1811.07819"> Learning Actionable Representations with Goal-Conditioned Policies</a></b>
-      <p> <i> Dibya Ghosh</i>, Abhishek Gupta, Sergey Levine <br/>
-      NeurIPS Deep RL Workshop 2018
+      <b><a href=""> MEMENTO: Further Progress Through Forgetting</a></b>
+      <p> Liam Fedus*, <i>Dibya Ghosh*</i>, John Martin, Yoshua Bengio, Marc G. Bellemare, Hugo Larochelle<br/>
+      NeurIPS Biological and Artificial RL Workshop 2019 <span style='color:red'>(Oral)</span>
     </p>
-      <table>
-        <tr>
-          <td><a href="https://arxiv.org/abs/1811.07819">ArXiv</a></td>
-          <td><a href="https://sites.google.com/view/arc-reps">Website</a></td>
-          <td></td>
-        </tr>
-      </table>
-      <div class="four columns"></div>
-      <div class="four columns"></div>
-      <div class="three columns"></div>
-  <br />   
-   <p>In this paper, we present ARCs, a representation learning algorithm which attempts to optimize <i> functionally relevant </i> elements of state. ARCs relate distance between states in latent space with the actions required to reach the state, which implicitly captures system dynamics and ignores uncontrollable factors. ARCs are useful for exploration, features for policies, and for developing hierarchies.
+   <p> We present the MEMENTO observation: that training a fresh agent which starts from the state that a trained agent plateaus can greatly improve performance.
+     We show this manifests across a number of learning algorithms across all 60 games in the Atari Learning Environment. We demonstrate how this simple observation can induce a
+     simple end-to-end agent which better avoids learning plateaus.
       </p>
     </div>
   
@@ -45,8 +42,76 @@ title: "Research Overview"
   
   
     <div class="three columns">
-  <img style="margin-top:3em" src="/images/research/vice.png">
+  <img style="margin-top:0em" src="/images/research/gcsl.png">
+  <table>
+    <tr>
+      <td><a href="https://arxiv.org/abs/1912.06088">ArXiv</a></td>
+      <td><a href="https://sites.google.com/view/gcsl/">Website</a></td>
+    </tr>
+  </table>    
+</div>
+    
+    <div class="nine columns">
+      
+      <b><a href="https://arxiv.org/abs/1912.06088"> Learning To Reach Goals Without Reinforcement Learning </a></b>
+      <p> <i> Dibya Ghosh*</i>, Abhishek Gupta*,  Justin Fu, Ashwin Reddy, Coline Devin, Benjamin Eysenbach, Sergey Levine <br/>
+      Arxiv.
+    </p>
+   <p> We present an algorithm (GCSL) which learns goal-reaching behaviors through iterative supervised learning. Drawing insights from imitation learning and hindsight
+     experience replay, we show that a specific relabelling scheme for goals and actions induces a "dataset" of expert behavior. By using supervised learning, the algorithm
+     avoids the optimization challenges present in value function methods and policy gradient schemes.
+      </p>
     </div>
+  
+  
+    </div>
+    
+      <div class="divider"></div>
+
+<div class="divider"></div>
+<h2 id='publications' class="page-heading">Publications</h1>
+
+<div class="row">
+  
+  
+    <div class="three columns">
+  <img style="margin-top:0em" src="/images/research/arc.png">
+  <table>
+    <tr>
+      <td><a href="https://arxiv.org/abs/1811.07819">ArXiv</a></td>
+      <td><a href="https://sites.google.com/view/arc-reps">Website</a></td>
+    </tr>
+  </table>    
+</div>
+    
+    <div class="nine columns">
+      
+      <b><a href="https://arxiv.org/abs/1811.07819"> Learning Actionable Representations with Goal-Conditioned Policies</a></b>
+      <p> <i> Dibya Ghosh</i>, Abhishek Gupta, Sergey Levine <br/>
+      ICLR 2019
+    </p>
+   <p> We present a representation learning algorithm (ARC) which attempts to optimize for <i> functionally relevant </i> elements of state. ARC relates distance between states in latent space with the actions required to reach the state, implicitly capturing system dynamics and ignoring uncontrollable factors. ARC is useful for exploration, features for policies, and for developing hierarchies.
+      </p>
+    </div>
+  
+  
+    </div>
+    
+      <div class="divider"></div>
+
+<div class="row">
+  
+  
+    <div class="three columns">
+  <img style="margin-top:0em" src="/images/research/vice.png">
+  <table>
+    <tr>
+      <td><a href="https://arxiv.org/abs/1805.11686">ArXiv</a></td>
+      <td><a href="https://sites.google.com/view/inverse-event">Website</a></td>
+    </tr>
+  </table>
+      
+</div>
     
     <div class="nine columns">
       
@@ -54,18 +119,8 @@ title: "Research Overview"
       <p> Justin Fu*, Avi Singh*, <i> Dibya Ghosh</i>, Larry Yang, Sergey Levine <br/>
       NeurIPS 2018
     </p>
-      <table>
-        <tr>
-          <td><a href="https://arxiv.org/abs/1805.11686">ArXiv</a></td>
-          <td><a href="https://sites.google.com/view/inverse-event">Website</a></td>
-          <td></td>
-        </tr>
-      </table>
-      <div class="four columns"></div>
-      <div class="four columns"></div>
-      <div class="three columns"></div>
-  <br />   
-   <p>In this paper, we present VICE, a method which generalizes inverse optimal control to learning reward functions from goal examples. By requiring only goal examples, and not demonstration
+      
+   <p>We present VICE, a method which generalizes inverse optimal control to learning reward functions from goal examples. By requiring only goal examples, and not demonstration
      trajectories, VICE is well suited for real-world robotics tasks, in which reward specification is difficult.
       </p>
     </div>
@@ -80,7 +135,14 @@ title: "Research Overview"
   
   
   <div class="three columns">
-<img style="margin-top:3em" src="/images/research/dnc.png">
+<img style="margin-top:0em" src="/images/research/dnc.png">
+<table>
+  <tr>
+    <td><a href="https://arxiv.org/abs/1711.09874">ArXiv</a></td>
+    <td><a href="http://dibyaghosh.com/dnc/">Website</a></td>
+    <td><a href="https://github.com/dibyaghosh/dnc">Code</a></td>
+  </tr>
+</table>
   </div>
   
   <div class="nine columns">
@@ -89,18 +151,7 @@ title: "Research Overview"
     <p><i> Dibya Ghosh</i>, Avi Singh, Aravind Rajeswaran, Vikash Kumar, Sergey Levine <br/>
     ICLR 2018.
   </p>
-    <table>
-      <tr>
-        <td><a href="https://arxiv.org/abs/1711.09874">ArXiv</a></td>
-        <td><a href="http://dibyaghosh.com/dnc/">Website</a></td>
-        <td><a href="https://github.com/dibyaghosh/dnc">Code</a></td>
-      </tr>
-    </table>
-    <div class="four columns"></div>
-    <div class="four columns"></div>
-    <div class="three columns"></div>
-<br />   
- <p>In this paper, we present a method for scaling model-free deep reinforcement learning methods to tasks with high stochasticity
+ <p>We present a method for scaling model-free deep reinforcement learning methods to tasks with high stochasticity
       in initial state and task distributions. We demonstrate our method on a suite of challenging sparse-reward manipulation tasks that were unsolved by prior work.
     </p>
   </div>
