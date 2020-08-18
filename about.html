@@ -5,13 +5,21 @@ title: "About"
 
 <!-- You can edit this whole page, remove it, or use it as basis for any non-post pages you have. -->
 <section class="content">
-  <p>My resume can also be found as a <a href="/cv_onepage.pdf">PDF </a> and on <a href="https://www.linkedin.com/in/dibyaghosh"> LinkedIn</a> </p>
+  <p>My resume can also be found as a <a href="/cv_onepage.pdf">PDF </a> and on <a href="https://www.linkedin.com/in/dibyaghosh"> LinkedIn</a>, but both are slightly out-of-date.</p>
 
   <div class="divider"></div>
 
 <h1 class="page-heading resume-heading">Education</h1>
 
-<b> UC Berkeley </b> (2015 - 2019)
+<b> Graduate: UC Berkeley </b> (2020 - Present)
+<ul>
+  <li> Pursuing a PhD in Computer Science</i>.
+  <li> Gratefully supported by a NSF GRFP fellowship and a Berkeley fellowship.
+</ul>
+
+<br />
+
+<b> Undergraduate: UC Berkeley </b> (2015 - 2019)
 <ul>
   <li> Double major in <i> Computer Science (honors)</i> and <i> Applied Mathematics (honors)</i>.
   <li> GPA: 3.99 / 4.00
@@ -19,8 +27,22 @@ title: "About"
   <li> Relevant Courses: Machine Learning, Convex Optimization, Artificial Intelligence, Theoretical Statistics, Algorithms, Computer Architecture, Randomized Algorithms, Data Structures . Full list <a href="/courses"> here </a> 
 </ul>
 
+<style>
+  #publications > li {
+   margin:0 0 0.5em 0;   
+}
+</style>
 <h1 class="page-heading resume-heading">Publications</h1>
-<ul>
+<ul id='publications' style="list-style-type:none;">
+  <li> <b>An operator view of policy gradient methods</b> <br /> <i> Dibya Ghosh</i>, Marlos C. Machado, Nicolas Le Roux. <br />
+    ICML 2020 Workshop on Theoretical Foundations of RL. <a href="https://arxiv.org/abs/2006.11266"> Arxiv </a> 
+  <li> <b> Representations for Stable Off-Policy Reinforcement Learning </b> <br /> 
+    <i> Dibya Ghosh</i>, Marc G. Bellemare. <br />
+    ICML 2020. <a href="https://arxiv.org/abs/2007.05520"> Arxiv </a> 
+  <li> <b>On Catastrophic Interference in Atari 2600 Games</b> <br /> William Fedus*, <i> Dibya Ghosh*</i>, John D. Martin, Marc G. Bellemare, Yoshua Bengio, Hugo Larochelle. <br />
+    NeurIPS 2019 Workshop on Biological and Artificial RL. <a href="https://arxiv.org/abs/2002.12499"> Arxiv </a> 
+  <li> <b> Learning To Reach Goals Without Reinforcement Learning  </b> <br /> <i> Dibya Ghosh*</i>, Abhishek Gupta*, Justin Fu, Ashwin Reddy, Coline Devin, Benjamin Eysenbach, Sergey Levine. <br />
+    <a href="https://arxiv.org/abs/1912.06088"> Arxiv. </a>             
   <li> <b> Learning Actionable Representions with Goal-Conditioned Policies</b> <br /> <i> Dibya Ghosh</i>, Abhishek Gupta, Sergey Levine. <br />
     ICLR 2019. <a href="https://arxiv.org/abs/1811.07819"> Arxiv </a> 
   <li> <b> Variational Inverse Control with Events </b> <br /> Justin Fu, Avi Singh, <i> Dibya Ghosh</i>, Larry Yang, Sergey Levine. <br />
@@ -29,31 +51,21 @@ title: "About"
    ICLR 2018. <a href="https://arxiv.org/abs/1711.09874"> Arxiv </a>
   <li>  <b> Theory Meets Data </b> <br /> Ani Adhikari, <i>(editor:  Dibya Ghosh)</i>, et al. <br />
   <a href="http://prob140.org/theory-meets-data.pdf">PDF</a> (Last updated 01/2017)
-  <li> <b> Development of a Computationally Optimized Model of Cancer-induced Angiogenesis through Specialized Cellular Mechanics</b> 
+  <!-- <li> <b> Development of a Computationally Optimized Model of Cancer-induced Angiogenesis through Specialized Cellular Mechanics</b> 
   <br /> <i> Dibya Ghosh</i> <br />
-   Intel ISEF 2015. <a href="https://arxiv.org/abs/1602.03244"> Arxiv </a>
+   Intel ISEF 2015. <a href="https://arxiv.org/abs/1602.03244"> Arxiv </a> -->
 </ul>
 
-  <div class="divider"></div>
+<div class="divider"></div>
 
-
-
-<h1 class="page-heading resume-heading">Research</h1>
-<b> Deep Reinforcement Learning </b>
-<ul>
-  <li> Working under Sergey Levine in the Berkeley AI Research Lab (BAIR)
-  <li> Focused on building flexible and powerful deep reinforcement learning algorithms better suited for solving complex real-world robotic problems
-</ul>
-
-<b> Explainable Machine Learning </b>
-<ul>
-  <li> Working under the supervision of Dr. Benjamin Brown at Lawrence Berkeley National Laboratory (Brown Lab)
-  <li> Focused on developing interpretable and explainable machine learning algorithms for analyzing high-dimensional scientific systems, such as genomics and agriculture.
-</ul>
-
-  <div class="divider"></div>
 
 <h1 class="page-heading resume-heading">Experience</h1>
+
+<b> AI Resident</b>  at Google Brain, Montréal <i> (July 2019 - July 2020)</i> 
+<ul>
+  <li> Performing fundamental research in reinforcement learning and optimization.
+</ul>
+
 <b> Head Undergraduate Student Instructor </b> for UC Berkeley Statistics <i> (Jan 2017 - June 2019)</i> 
 <ul>
   <li> Spring '19: Head uGSI for <a href="http://prob140.org"> Statistics 140: Probability for Data Science.</a></li>
@@ -71,7 +83,8 @@ title: "About"
 </ul>
 <b> Research Assistant</b>  at Lawrence Berkeley National Laboratory <i> (June 2016 - June 2019)</i> 
 <ul>
-  <li> See <i> Randomized Community Segmentation in Graphs </i> in <b> Research </b> above for more details.
+  <li> Working under the supervision of Dr. Benjamin Brown at Lawrence Berkeley National Laboratory (Brown Lab)
+  <li> Focused on developing interpretable and explainable machine learning algorithms for analyzing high-dimensional scientific systems, such as genomics and agriculture.
 </ul>
 
 <b> Course Developer </b> at  UC Berkeley <i>(June 2016 - Dec 2016)</i>
@@ -105,6 +118,9 @@ title: "About"
 
 <h1 class="page-heading resume-heading">Awards and Honors</h1>
 <ul>
+  <li> Best Student Paper Award at NeurIPS 2019 BARL workshop (out of 30 papers)</li>
+  <li> Awarded the Berkeley Fellowship (given to the top incoming PhD students at UC Berkeley)</li>
+  <li> Awarded the NSF GRFP Fellowship (given to 2000 / 13000 applications)</li>
   <li> CS Major Citation (awarded to the top graduating senior in Computer Science)</li>
   <li> Outstanding Graduate Student Instructor Award (awarded to top 10% of GSIs)
   <li> Finalist for CRA Outstanding Undergraduate Researcher Award (awarded to ~20 students nationally)

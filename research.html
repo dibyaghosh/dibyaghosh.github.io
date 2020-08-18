@@ -4,11 +4,75 @@ title: "Research Overview"
 ---
 
 <h1 class="page-heading">Research</h1>
-<center>  Here's my <a href="https://scholar.google.com/citations?user=znnl0kwAAAAJ&hl=en&oi=sra">Google Scholar</a>. My <a onclick='alert("Dibya Ghosh -> Ani Adhikari -> Persi Diaconis -> Paul Erdos")'>Erdős number</a> is 3. My Bacon number is lamentably still undefined.  Jump to <a href='#preprints'>preprints</a> or <a href='#publications'>publications.</a></center>
+<center> My <a onclick='alert("Dibya Ghosh -> Ani Adhikari -> Persi Diaconis -> Paul Erdos")'>Erdős number</a> is 3. My Bacon number is lamentably still undefined. See my <a href="https://scholar.google.com/citations?user=znnl0kwAAAAJ&hl=en&oi=sra">Google Scholar</a> for more.</center>
 
 
 <div class="divider"></div>
-<h2 id='preprints' class="page-heading">Preprints</h1>
+<!-- <h2 id='preprints' class="page-heading">Publications</h1> -->
+  <div class="row">
+  
+  
+    <div class="three columns">
+  <img style="margin-top:0em" src="/images/research/pgoperators.png">
+  <table>
+    <tr>
+      <td><a href="https://arxiv.org/abs/2006.11266">ArXiv</a></td>
+      <td><a href="https://www.youtube.com/watch?v=Ol9GwgBalhA">Talk</a></td>
+        <td><a href="http://mcmachado.info/?p=248">Blog</a></td>
+    </tr>
+  </table>    
+</div>
+    
+    <div class="nine columns">
+      
+      <b><a href=""> An operator view of policy gradient methods </a></b>
+      <p> <i>Dibya Ghosh</i>, Marlos C. Machado, Nicolas Le Roux<br/>
+        ICML 2020 Workshop on Theoretical Foundations of RL
+      </p>
+   <p> We reinterpret the classical <span style='font-variant-caps: all-small-caps;'>REINFORCE</span> algorithm as the iterated application of two operators:
+    a policy improvement operator and a projection operator. This new perspective provides new insights about
+    the behavior of policy gradient methods, and in particular, uncovers a strong link with their value-based counterparts.
+      </p>
+    </div>
+  
+  
+    </div>
+    
+      <div class="divider"></div>
+
+  <div class="row">
+  
+  
+    <div class="three columns">
+  <img style="margin-top:0em" src="/images/research/stablerepr.png">
+  <table>
+    <tr>
+      <td><a href="https://arxiv.org/abs/2007.05520">ArXiv</a></td>
+      <td><a href="https://icml.cc/virtual/2020/poster/6666">Talk</a></td>
+        <!-- <td><a href="https://github.com/google-research/google-research/tree/master/memento">Code</a></td> -->
+    </tr>
+  </table>    
+</div>
+    
+    <div class="nine columns">
+      
+      <b><a href=""> Representations for Stable Off-Policy Reinforcement Learning
+      </a></b>
+      <p><i>Dibya Ghosh</i>, Marc G. Bellemare<br/>
+      ICML 2020
+    </p>
+   <p>
+     We study the learning dynamics of the classic off-policy value function learning algorithm, <span style='font-variant-caps: all-small-caps;'>TD(0)</span>, through the lens of the state representation.
+      Our work reveals several insights into how certain choices of state representation affect stability and divergence of RL.
+      </p>
+    </div>
+  
+  
+    </div>
+    
+      <div class="divider"></div>
+
+
   <div class="row">
   
   
@@ -25,10 +89,11 @@ title: "Research Overview"
     
     <div class="nine columns">
       
-      <b><a href=""> MEMENTO: Further Progress Through Forgetting</a></b>
+      <b><a href=""> On Catastrophic Interference in Atari 2600 Games</a></b>
       <p> Liam Fedus*, <i>Dibya Ghosh*</i>, John Martin, Yoshua Bengio, Marc G. Bellemare, Hugo Larochelle<br/>
-      NeurIPS Biological and Artificial RL Workshop 2019 <span style='color:red'>(Oral)</span>
-    </p>
+        NeurIPS Biological and Artificial RL Workshop 2019 <span style='color:red'>(Oral)</span>
+      </p>
+  
    <p> We present the MEMENTO observation: that training a fresh agent which starts from the state that a trained agent plateaus can greatly improve performance.
      We show this manifests across a number of learning algorithms across all 60 games in the Atari Learning Environment. We demonstrate how this simple observation can induce a
      simple end-to-end agent which better avoids learning plateaus.
@@ -48,7 +113,8 @@ title: "Research Overview"
   <table>
     <tr>
       <td><a href="https://arxiv.org/abs/1912.06088">ArXiv</a></td>
-      <td><a href="https://sites.google.com/view/gcsl/">Website</a></td>
+      <td><a href="https://dibyaghosh.com/blog/rl/gcsl.html">Blog</a></td>
+      <td><a href="https://github.com/notdibya/gcsl">Code</a></td>
     </tr>
   </table>    
 </div>
@@ -57,7 +123,7 @@ title: "Research Overview"
       
       <b><a href="https://arxiv.org/abs/1912.06088"> Learning To Reach Goals Without Reinforcement Learning </a></b>
       <p> <i> Dibya Ghosh*</i>, Abhishek Gupta*,  Justin Fu, Ashwin Reddy, Coline Devin, Benjamin Eysenbach, Sergey Levine <br/>
-      Arxiv.
+      Preprint.
     </p>
    <p> We present an algorithm (GCSL) which learns goal-reaching behaviors through iterative supervised learning. Drawing insights from imitation learning and hindsight
      experience replay, we show that a specific relabelling scheme for goals and actions induces a "dataset" of expert behavior. By using supervised learning, the algorithm
@@ -67,11 +133,7 @@ title: "Research Overview"
   
   
     </div>
-    
-      <div class="divider"></div>
-
-<div class="divider"></div>
-<h2 id='publications' class="page-heading">Publications</h1>
+    <div class="divider"></div>
 
 <div class="row">
   
