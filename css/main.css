@@ -303,6 +303,27 @@ pre {
     #menu {
       display: none; } }
 
+@media screen and (min-width: 550px) {
+  #otherlinks {
+    display: none; 
+  } 
+}
+
+@media screen and (max-width: 550px) {
+  #mainlinks {
+    display: none; 
+  } 
+}
+
+#mainlinks > .post-link {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+#otherlinks > .post-link {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
 /*
  * Search
  */
