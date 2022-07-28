@@ -2,24 +2,81 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <title>Dibya Ghosh</title>
+    <style>
+        .publication {
+            all: unset;
+        }
+        ul.no-bullets {
+            list-style-type: none; /* Remove bullets */
+            padding: 1em; /* Remove padding */
+            padding-top: 0em;
+            margin: 0; /* Remove margins */
+            }
+        li {
+            padding: 0.4em;
+        }
+        .collapsing {
+  transition: none !important;
+}
+.text-responsive {
+  font-size: min(100%, calc(20% + 1vw + 1vh));
+}
+</style>
 </head>
-<center style = "font-family:georgia,garamond,serif;">
+
+<div class="container" style = "font-family:georgia,garamond,serif;">
     <br /><br />
-
-<h1>Dibya Ghosh</h1><br /><br />
+<div class="row">
+    <div class="col-md-6">
+        <h1>Dibya Ghosh</h1><br /><br />
 I'm a PhD student at UC Berkeley studying decision making using reinforcement learning.
-<br /><br />
-
 Previously, I was at Google Brain, Montréal. Even earlier, I did my undergrad at UC Berkeley.
-<br /><br /><br /><br />
+<br /><br />
 
 See my <a href="https://scholar.google.com/citations?user=znnl0kwAAAAJ">Google Scholar</a> for published work and <a href="https://dibyaghosh.com/blog/">blog</a> for more fun.
 <br /><br />
 
 My first name is pronounced "Dibbo". Reach me at dibya (at) berkeley (dot) edu. 
 
+<br /><br />
+
+
 <div style='color:white'>Find my old website <a style='color:white' href='old_index.html'>here</a></div>
-</center>
-</html>
+
+
+</div>
+</div>
+<h4 id="manuscripts">Recent Publications</h4>
+<ul class="no-bullets text-responsive">
+<li><a class='publication' href="https://arxiv.org/abs/2207.02200"><strong>Offline RL Policies Should be Trained to be Adaptive </strong></a>. ICML 2022 (Oral). <br>
+<em>Dibya Ghosh</em>, Anurag Ajay, Pulkit Agrawal, Sergey Levine.</li>
+<li><a class='publication' href="https://arxiv.org/abs/2107.06277"><strong>Why Generalization in RL is Difficult: Epistemic POMDPs and Implicit Partial Observability</strong></a>. NeurIPS 2021. <br>
+    <em>Dibya Ghosh</em>, Jad Rahme, Aviral Kumar, Amy Zhang, Ryan P. Adams, Sergey Levine.</li>
+<li><a class='publication' href="https://arxiv.org/abs/2010.14498"><strong>Implicit Under-Parameterization Inhibits Data-Efficient Deep RL </strong></a>. ICLR 2021. <br>
+    Aviral Kumar, Rishabh Agarwal, <em>Dibya Ghosh</em>, Sergey Levine.</li>
+<li><a class='publication' href="https://arxiv.org/abs/1912.06088"><strong>Learning to Reach Goals via Iterated Supervised Learning </strong></a>. ICLR 2021 (Oral). <br>
+    <em>Dibya Ghosh</em>, Abhishek Gupta, Ashwin Reddy, Justin Fu, Coline Devin, Ben Eysenbach, Sergey Levine.</li>
+<li><a class="publication collapsed" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> <strong> See all ▼</strong></a>   </li>
+</ul>
+<ul class="no-bullets collapse text-responsive" id="collapseExample">
+    <li><a class='publication' href="https://arxiv.org/abs/2006.11266"><strong>An Operator View of Policy Gradient Methods </strong></a>. NeurIPS 2020. <br>
+        <em>Dibya Ghosh</em>, Marlos C Machado, Nicolas Le Roux</li>
+    <li><a class='publication' href="https://arxiv.org/abs/2007.05520"><strong>Representations for Stable Off-Policy Reinforcement Learning </strong></a>. ICML 2020. <br>
+        <em>Dibya Ghosh</em>, Marc G. Bellemare.</li>
+    <li><a class='publication' href="https://arxiv.org/abs/2002.12499"><strong>On Catastrophic Interference in Atari 2600 Games </strong></a> Preprint. <br>
+        William Fedus, <em>Dibya Ghosh</em>, John D. Martin, Marc G. Bellemare, Yoshua Bengio, Hugo Larochelle. </li>
+    <li><a class='publication' href="https://arxiv.org/abs/1811.07819"><strong>Learning Actionable Representations with Goal-Conditioned Policies </strong></a>. ICLR 2019. <br>
+        <em>Dibya Ghosh</em>, Abhishek Gupta, Sergey Levine. </li>
+    <li><a class='publication' href="https://arxiv.org/abs/1805.11686"><strong>Variational Inverse Control with Events: A General Framework for Data-Driven Reward Definition </strong></a>. NeurIPS 2018. <br>
+       Justin Fu, Avi Singh,  <em>Dibya Ghosh</em>, Larry Yang, Sergey Levine. </li>
+    <li><a class='publication' href="https://arxiv.org/abs/1711.09874"><strong>Divide-and-Conquer Reinforcement Learning </strong></a>. ICLR 2018. <br>
+        <em>Dibya Ghosh</em>, Avi Singh, Aravind Rajeswaran, Vikash Kumar, Sergey Levine. </li>
+            
+    </ul>    
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </html>
