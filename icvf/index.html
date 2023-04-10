@@ -1,6 +1,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">google.load("jquery", "1.3.2");</script>
@@ -116,91 +117,69 @@
 <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,600,400italic,600italic,300,300italic' rel='stylesheet' type='text/css'>
   <head>
     <link rel="icon" type="image/png" href="resources/seal_icon.png">
-    <title>Divide-and-Conquer Reinforcement Learning</title>
-    <meta property='og:title' content='GPLAC: Generalizing Vision-Based Robotic Skills using Weakly Labeled Images' />
-    <meta property="og:description" content="Singh, Yang, Levine. GPLAC: Generalizing Vision-Based Robotic Skills using Weakly Labeled Images. In ICCV, 2017." />
-    <meta property='og:url' content='https://people.eecs.berkeley.edu/~avisingh/iccv17/' />
-    <meta property='og:video' content='https://www.youtube.com/v/o67N2axrIKc' />
+    <title>ICVF</title>
+    <meta property='og:title' content='Reinforcement Learning from Passive Data via Latent Intentions' />
+    <meta property="og:description" content="Ghosh, Bhateja, Levine. Reinforcement Learning from Passive Data via Latent Intentions" />
+    <meta property='og:url' content='https://dibyaghosh.com/icvf/' />
     <meta property='og:image' content='https://img.youtube.com/vi/o67N2axrIKc/0.jpg' />
-    <meta property="og:type" content="video">
   </head>
 
   <body>
         <br>
-        <center><span style="font-size:4em;font-weight:bold;">Divide-and-Conquer  </br> Reinforcement Learning</span></center>
+        <center><span style="font-size:4em;font-weight:bold;">Reinforcement Learning from Passive Data via Latent Intentions</span></center>
 
-        <table align=center width=1000px>
+        <table align=center width=100%>
           <tr>
-            <td><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~avisingh/" target="_blank">Dibya Ghosh<sup>1</sup></a></span></center></td>
-            <td align=center width=200px><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~avisingh/iccv17/" target="_blank">Avi Singh<sup>1</sup></a></span></center></td>
-            <td align=center width=200px><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~avisingh/iccv17/" target="_blank">Aravind Rajeswaran<sup>2</sup></a></span></center></td>
-            <td align=center width=200px><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~avisingh/iccv17/" target="_blank">Vikash Kumar<sup>2</sup></a></span></center></td>
-            <td><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~svlevine/" target="_blank">Sergey Levine<sup>1</sup></a></span></center></td>
+            <td><center><span style="font-size:24px"><a href="https://dibyaghosh.com/" target="_blank">Dibya Ghosh</a></span></center></td>
+            <td><center><span style="font-size:24px"><a href="https://dibyaghosh.com/" target="_blank">Chethan Bhateja</a></span></center></td>
+            <td><center><span style="font-size:24px"><a href="https://people.eecs.berkeley.edu/~svlevine/" target="_blank">Sergey Levine</a></span></center></td>
           <tr/>
          </table>
         <table align=center width=700px>
           <tr>
-            <td align=center width=400px><center><span style="font-size:24px"><sup>1</sup>University of California, Berkeley</span></center></td>
-            <td align=center width=300px><center><span style="font-size:24px"><sup>2</sup>University of Washington</span></center></td>
-
+            <td align=center width=400px><center><span style="font-size:24px">University of California, Berkeley</span></center></td>
             <tr/>
         </table>
         <table align=center width=400px>
           <tr>
             <td align=center width=150px>
-            <center><span style="font-size:24px"><a href="https://iclr.cc/Conferences/2018" target="_blank">ICLR 2018</a></span></center></td>
+            <!-- <center><span style="font-size:24px"><a href="https://iclr.cc/Conferences/2018" target="_blank">ICLR 2018</a></span></center></td> -->
           <tr/>
         </table>
         <table align=center width=500px>
           <tr>
-            <td align=center width=200px><center><span style="font-size:24px"><a href="https://arxiv.org/abs/1711.09874">[Download Paper]</a></span></center></td>
-        <tr/>
+            <td align=center width=200px><center><span style="font-size:24px"><a href="https://arxiv.org/abs/1711.09874">[Paper]</a></span></center></td>
+            <td align=center width=200px><center><span style="font-size:24px"><a href="https://github.com/dibyaghosh/icvf_release">[Code]</a></span></center></td>
+            <tr/>
         </table><br/>
 
-        <center id="demoVideo"><h1>Demo Video</h1></center>
-          <table align=center width=600px>
-            <tr><td align=center width=600px>
-                <video width="1000" height="600" controls>
-                    <source src="dnc_video.mp4" type="video/mp4">
-                    <source src="dnc_video.ogv" type="video/ogg">
-                    Your browser does not support the video tag.
-                  </video>
-            </td></tr>
-          </table>
-
-        <br>
-
-        Standard model-free deep reinforcement learning (RL) algorithms sample a new initial state for each trial,
-         allowing them to optimize policies that can perform well even in highly stochastic environments. 
-         However, problems that exhibit considerable initial state variation typically produce high-variance gradient estimates for model-free RL, 
-         making direct policy or value function optimization challenging. In this paper, we develop a novel algorithm that instead partitions the initial state space into
-          "slices", and optimizes an ensemble of policies, each on a different slice. The ensemble is gradually unified into a single policy that can succeed on the whole state space. 
-          This approach, which we term <i>divide-and-conquer RL</i>, is able to solve complex tasks where conventional deep RL methods are ineffective. 
-          Our results show that divide-and-conquer RL greatly outperforms conventional policy gradient methods on challenging grasping, manipulation, 
-          and locomotion tasks, and exceeds the performance of a variety of prior methods.
-        
-      <br>
-      <br>
-      <hr>
-
-      <br>
-      <hr>
-
-        <table align=center width=1000px>
-          <tr><td width=1000px>
-            <center><a href="teaser.png"><img src = "teaser.png" height="400px"></img></a><br></center>
+        <table align=center width="100%">
+          <tr><td width="100%">
+            <center><a href="teaser.png"><img src = "teaser.png" width="100%"></img></a><br></center>
           </td></tr>
         </table>
+        <br>
 
-        <center id="sourceCode"><h1>Our Solution</h1></center>
-        For problems with high initial state variability, we partition the initial state space of the task into contexts using clustering algorithms. We train an ensemble of <i> local </i> policies, each specialized to a particular context. The objective for each policy is to maximize expected reward and minimize the KL divergence from each of the other policies in the ensemble. On a slower timescale, the ensemble is distilled together into a <i> global </i> policy, which can operate on
-        the original task. 
+
+      <br>
+      <hr>
+
+        <center id="sourceCode"><h1>Main Idea</h1></center>
+        We pre-train on passive data (e.g. video data) to extract a general knowledge of how an agent may act to influence its environment. Our approach models the effects of acting with intention: estimates the likelihood of witnessing any given outcome in the future when acting according to achieve some other intention.
         <br/>
 
       <br>
       <hr>
 
-        <table align=center width=850px>
+      <center id="sourceCode"><h1>Abstract</h1></center>
+
+
+        Passive observational data, such as human videos, is abundant and rich in information, yet remains largely untapped by current RL methods. Perhaps surprisingly, we show that passive data, despite not having reward or action labels, can still be used to learn features that accelerate downstream RL. Our approach learns from passive data by modeling intentions: measuring how the likelihood of future outcomes change when the agent acts to achieve a particular task. We propose a temporal difference learning objective to learn about intentions, resulting in an algorithm similar to conventional RL, but which learns entirely from passive data. When optimizing this objective, our agent simultaneously learns representations of states, of policies, and of possible outcomes in an environment, all from raw observational data. Both theoretically and empirically, this scheme learns features amenable for value prediction for downstream tasks, and our experiments demonstrate the ability to learn from many forms of passive data, including cross-embodiment video data and YouTube videos.
+      <br>
+      <br>
+      <hr>
+
+        <!-- <table align=center width=850px>
           <center><h1>Paper</h1></center>
           <tr>
           <td width=400px align=left>
@@ -225,7 +204,7 @@
           <td width=450px align=left>
             </td>
             </tr>
-        </table>
+        </table> -->
 
 
     <br><br>
