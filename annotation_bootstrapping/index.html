@@ -1,0 +1,554 @@
+
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="twitter:title" content="Visual Pre-Training on Unlabeled Images using Reinforcement Learning">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://dibyaghosh.com/annotation_bootstrapping/teaser.jpeg">
+
+    <title>Visual Pre-Training on Unlabeled Images using Reinforcement Learning </title>
+
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+      </script>
+      <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+      </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway|Open+Sans">
+    <link rel="stylesheet" href="https://dibyaghosh.com/vptr/files/main.css">
+</head>
+<style>
+
+.plus-sign {
+    vertical-align: sub; /* Changed from super to sub */
+    font-size: 0.7em;
+    color: #475569;
+  }
+</style>
+
+
+<body>
+    <div class="content-container">
+        <h2 class="title">Visual Pre-Training on Unlabeled Images using Reinforcement Learning</h2>
+
+        <div class="authors">
+            <a href="https://dibyaghosh.com">Dibya Ghosh</a>,
+            <a href="https://people.eecs.berkeley.edu/~svlevine/">Sergey Levine</a>
+        </div>
+ 
+
+        <div class="links">
+            <a href="https://arxiv.org/pdf/2506.11967">Paper</a> |
+            <a href="https://arxiv.org/abs/2506.11967">ArXiv</a> |
+            <a style="font-weight: bold;" href="https://github.com/dibyaghosh/annotation_bootstrapping">Code</a>
+          </div>
+
+        <div class="teaser">
+            <video autoplay muted playsinline disableRemotePlayback poster="teaser.png"
+                onended="reveal()" id="teaser_video">
+                <source src="teaser.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- <div class="update">
+            <p><b>UPDATE:</b> We now have a PyTorch implementation that supports LoRA for low-memory training <a
+                    href="https://github.com/kvablack/ddpo-pytorch">here</a>!</p>
+        </div>
+ -->
+
+        <div class="summary">
+            <h3>Summary</h3>
+            <p>
+            Many SSL methods bear similarity to value-based RL: learning features for an image by predicting targets generated from nearby views, e.g., by taking a different crop or color augmentation. We explore a method that directly casts pre-training on unlabeled image data as an RL problem. Learning in this way resembles crop-consistency SSL, but offers a simple lever to use captions or curated image data to shape feature learning towards ``rewards'' of interest. Our experiments demonstrate improved representations when training on video data like EpicKitchens, scene data like COCO, and web-crawl data like CC12M.
+            </p>
+        </div>
+
+
+        <div class="method">
+          <h3>Method</h3>
+
+          <div style="display: flex; align-items: center; gap: 1rem;">
+              <div style="flex: 1;">
+                <p>
+                  We define an RL problem over unlabeled images using a Markov chain perspective on image augmentations. An agent receives a view of an image $x$ and takes actions by applying an image transformation to change the view (e.g., zooming out, panning left, rotating the image, cropping to a subview), with the intention of finding views that maximize the likelihood of some specific semantic "annotation" of interest $p(\ell|x)$ (e.g., find the gentleman in the green suit, or a kite, or a boy playing). 
+                </p>
+
+                <p> 
+
+                  Take two random crops of an image, as in any other SSL method, $x_1$ by cropping to bounding box $\mathbf{bb} _1$ and similarly $x_2$ to $\mathbf{bb}_2$. We interpret $(x=x_1, a=\mathbf{bb}_{1\to2}, x'=x_2)$ as a transition in our environment: applying a panning transformation from the view $x_1$ to create $x_2$. Learning a value function corresponds to, for any $\ell$, using the model's outputs at one crop $x_2$ to generate a target prediction for the other crop $x_1$:
+
+$$\min D(~Q_{AB}(\ell | x_1, a=\mathbf{bb}_{1\to2}), (1-\gamma)p(\ell | x_2)  + \gamma \max_{a'} Q^{target}(\ell | x_2,a')) $$
+</p>
+              </div>
+              <img src="teaser.jpeg" alt="Method" style="width: 30%;">
+          </div>
+
+          <center> <img src="method.jpeg" alt="Method" style="max-width: 60%; width: 100%; @media (max-width: 768px) { max-width: 100%; }; text-align: justify;"> </center>
+
+          </p>
+      </div>
+
+
+        <div class="results results-section">
+            <h3>Results</h3>
+            <p> 
+
+            In our paper, we evaluate annotation bootstrapping on a number of datasets, where crop-consistency SSL methods like SimCLR and DINO tend to suffer. Across datasets like EpicKitchens, COCO, and CC12M, we find that bootstrapping annotations improves over several weakly supervised and self-supervised base losses ($\text{AB}_{CLIP}$ over CLIP, $\text{AB}_{SimCLR}$ over SimCLR, $\text{AB}_{DINO}$ over DINO). The gap is greatest when rewards correspond to textual captions, where it significantly outperforms other approaches combining self-supervision with captions. Below, we show results for CC12M, and we refer to the paper for results on other datasets.
+          </p>
+          
+
+
+            <table cellspacing="0" class="resulttable">
+              <thead>
+                  <tr>
+                      <th data-label="Pretrain Dataset">Pretrain Dataset</th>
+                      <th data-label="Method">Method</th>
+                      <th data-label="ImageNet">ImageNet</th>
+                      <th data-label="Avg Cls*">Avg Cls*</th>
+                      <th data-label="Clevr/Depth">Clevr<sub>/Depth</sub></th>
+                      <th data-label="Clevr/Count">Clevr<sub>/Count</sub></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td rowspan="6" data-label="Pretrain Dataset">CC12M (no captions)</td>
+                      <td data-label="Method">MAE</td>
+                      <td data-label="ImageNet">61.3</td>
+                      <td data-label="Avg Cls*">75.4</td>
+                      <td data-label="Clevr/Depth" class="font-bold">82.8</td>
+                      <td data-label="Clevr/Count" class="font-bold">90.4</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">I-JEPA</td>
+                      <td data-label="ImageNet">60.0</td>
+                      <td data-label="Avg Cls*">76.0</td>
+                      <td data-label="Clevr/Depth">80.1</td>
+                      <td data-label="Clevr/Count" class="font-bold">90.0</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">SimCLR</td>
+                      <td data-label="ImageNet">67.3</td>
+                      <td data-label="Avg Cls*">79.0</td>
+                      <td data-label="Clevr/Depth">76.5</td>
+                      <td data-label="Clevr/Count">89.4</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method"><span class="abbreviation-style">AB<sub>SimCLR</sub></span> (Ours)</td>
+                      <td data-label="ImageNet">68.0<span class="plus-sign">+0.7</span></td>
+                      <td data-label="Avg Cls*">79.5<span class="plus-sign">+0.4</span></td>
+                      <td data-label="Clevr/Depth">79.5<span class="plus-sign">+3.0</span></td>
+                      <td data-label="Clevr/Count" class="font-bold">89.6<span class="plus-sign">+0.2</span></td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">DINO</td>
+                      <td data-label="ImageNet">68.9</td>
+                      <td data-label="Avg Cls*">80.9</td>
+                      <td data-label="Clevr/Depth">79.3</td>
+                      <td data-label="Clevr/Count">87.6</td>
+                  </tr>
+                  <tr class="tablerow"> <!-- Apply tablerow here as an example -->
+                      <td data-label="Method"><span class="abbreviation-style">AB<sub>DINO</sub></span> (Ours)</td>
+                      <td data-label="ImageNet" class="font-bold">70.6<span class="plus-sign">+1.8</span></td>
+                      <td data-label="Avg Cls*" class="font-bold">82.2<span class="plus-sign">+1.3</span></td>
+                      <td data-label="Clevr/Depth">80.4<span class="plus-sign">+1.1</span></td>
+                      <td data-label="Clevr/Count" class="font-bold">89.9<span class="plus-sign">+2.4</span></td>
+                  </tr>
+                  <tr>
+                      <td colspan="6" style="border: none; height: 10px;"></td> <!-- Empty row for separation -->
+                  </tr>
+                  <tr>
+                      <td rowspan="5" data-label="Pretrain Dataset">CC12M (w/ captions)</td>
+                      <td data-label="Method">CLIP</td>
+                      <td data-label="ImageNet">69.5</td>
+                      <td data-label="Avg Cls*">82.8</td>
+                      <td data-label="Clevr/Depth">70.0</td>
+                      <td data-label="Clevr/Count">84.4</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">
+                          CLIP <span class="small-text">+Aug</span>
+                          <!-- Citations removed as per user's example style -->
+                      </td>
+                      <td data-label="ImageNet">72.6</td>
+                      <td data-label="Avg Cls*">85.0</td>
+                      <td data-label="Clevr/Depth">72.7</td>
+                      <td data-label="Clevr/Count">87.0</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">
+                          SLIP <span class="small-text">+SimCLR</span>
+                          <!-- Citations removed -->
+                      </td>
+                      <td data-label="ImageNet">72.0</td>
+                      <td data-label="Avg Cls*">84.3</td>
+                      <td data-label="Clevr/Depth">72.4</td>
+                      <td data-label="Clevr/Count">87.2</td>
+                  </tr>
+                  <tr>
+                      <td data-label="Method">
+                          SiLC <span class="small-text">+DINO</span>
+                          <!-- Citations removed -->
+                      </td>
+                      <td data-label="ImageNet">72.8</td>
+                      <td data-label="Avg Cls*">85.0</td>
+                      <td data-label="Clevr/Depth">74.4</td>
+                      <td data-label="Clevr/Count">88.2</td>
+                  </tr>
+                  <tr class="tablerow"> <!-- Apply tablerow here as an example -->
+                      <td data-label="Method"><span class="abbreviation-style">AB<sub>CLIP</sub></span> (Ours)</td>
+                      <td data-label="ImageNet" class="font-bold">74.1<span class="plus-sign">+4.6</span></td>
+                      <td data-label="Avg Cls*" class="font-bold">85.6<span class="plus-sign">+2.8</span></td>
+                      <td data-label="Clevr/Depth" class="font-bold">78.1<span class="plus-sign">+8.1</span></td>
+                      <td data-label="Clevr/Count" class="font-bold">91.9<span class="plus-sign">+7.4</span></td>
+                  </tr>
+              </tbody>
+            </table>
+
+            <center> <img src="results1.jpeg" alt="Method" style="max-width: 100%; width: 100%; @media (max-width: 768px) { max-width: 100%; }; text-align: justify;"> </center>
+            <center> <img src="results2.jpeg" alt="Method" style="max-width: 40%; width: 100%; @media (max-width: 768px) { max-width: 100%; }; text-align: justify;"> <img src="results3.jpg" alt="Method" style="max-width: 40%; width: 100%; @media (max-width: 768px) { max-width: 100%; }; text-align: justify;"> </center>
+
+
+          </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+        <i>This project site borrows heavily from <a href="https://rl-diffusion.github.io/">this project website</a></i>
+    </div>
+
+    <script>
+        const replay = document.querySelector('.replay');
+
+        function reveal() {
+            replay.style.display = 'flex';
+        }
+
+        replay.addEventListener('click', () => {
+            const video = document.querySelector('video');
+            video.currentTime = 0;
+            video.play();
+            replay.style.display = 'none';
+        });
+    </script>
+
+<style>
+
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12pt;
+}
+
+p {
+    line-height: 1.5;
+}
+
+.content-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h2,
+h3 {
+    font-weight: 800;
+    font-family: "Raleway", sans-serif;
+    font-variant-ligatures: no-common-ligatures;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title {
+    margin: 2.5rem auto 1rem auto;
+}
+
+.links {
+    font-size: 12pt;
+    margin: 1rem auto;
+}
+
+.title,
+.links,
+.authors,
+.footnote {
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+}
+
+a {
+    color: #0055AA;
+    text-decoration: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #0055AA;
+}
+
+.footnote {
+    font-size: 11pt;
+    margin-top: 0.2rem;
+}
+
+.teaser {
+    margin: 0.5rem auto 1rem auto;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.replay {
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    align-items: center;
+    cursor: pointer;
+    display: none;
+}
+
+.replay>img {
+    height: 1em;
+}
+
+.replay>div {
+    line-height: 1em;
+    margin-bottom: 2px;
+    margin-left: 0.2em;
+    color: #2296f3;
+}
+
+.teaser>.teaser-title {
+    font-size: 11pt;
+    text-align: center;
+}
+
+.teaser>.teaser-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border: 3pt solid #424242;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    margin-top: 0.2rem;
+}
+
+.teaser>.teaser-subtitle {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-text {
+    font-size: 15pt;
+    margin: auto 1rem;
+}
+
+.arrow-right,
+.arrow-left {
+    flex-grow: 1;
+    height: 3.5pt;
+    display: block;
+    padding: 0;
+    background-color: black;
+}
+
+.arrow-left {
+    border-radius: 2pt;
+    margin-left: 5%;
+}
+
+.arrow-right {
+    border-radius: 2pt 0 0 2pt;
+}
+
+.arrow-head {
+    width: 0;
+    height: 0;
+    border-top: 10pt solid transparent;
+    border-bottom: 10pt solid transparent;
+    border-left: 10pt solid black;
+    margin-right: 5%;
+}
+
+.update {
+    background-color: #f7f093;
+    border-radius: 5pt;
+    padding: 0.1em 1em;
+}
+
+.summary {
+    margin-bottom: 2rem;
+}
+
+.caption {
+    font-size: 10pt;
+    font-style: italic;
+}
+
+.results-section {
+    margin: 2rem auto 3rem auto;
+}
+
+.results-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.results-grid>div{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: fit-content(100%);
+    max-width: 45%;
+    min-width: 350px;
+    gap: 0.1rem;
+    align-items: center;
+    justify-items: center;
+    margin: auto 0;
+}
+
+.results-grid>div>div {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-self: center;
+    width: 100%;
+    align-items: center;
+}
+
+.arrow-text.results {
+    font-size: 7pt;
+    margin: auto 0.4rem;
+}
+
+.arrow-right.results,
+.arrow-left.results {
+    height: 2.0pt;
+}
+
+.arrow-left.results {
+    border-radius: 1pt;
+}
+
+.arrow-right.results {
+    border-radius: 1pt 0 0 1pt;
+}
+
+.arrow-head.results {
+    border-top: 5pt solid transparent;
+    border-bottom: 5pt solid transparent;
+    border-left: 5pt solid black;
+}
+
+.results-grid>div>span {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 0.2rem;
+}
+
+.results-grid.counting {
+    margin: 0 auto;
+    gap: 0.1rem;
+}
+
+.videos {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5rem;
+        padding: 0rem 0rem;
+        background-color: #F3F5F0;
+
+    }
+    .video {
+        min-height: 6rem;
+        padding: 1em 0.5em;
+    }
+    .video.vptr {
+        grid-area: 1 / 1 / span 2 / span 2;
+    }
+    
+    .videocaption {
+        font-size: 10pt;
+        /* font-style: italic; */
+        text-align: center;
+        align-items: center;
+        display: table;
+        margin: 0.3em auto;
+    }
+
+/* .results-grid.counting>img {
+    min-width: 100px;
+    max-width: 120px; */
+/* } */
+
+.resulttable {
+    align-items: center;
+  table-layout: fixed;
+width: 100%;
+  border: 1pt solid black;
+
+}
+
+.resulttable td {
+    border: 1pt solid black;
+    text-align: center;
+}
+
+.resulttable th {
+    border: 1pt solid black;
+    text-align: center;
+}
+
+.scenario {
+    display: none;
+}
+.scenario-container {
+    background-color: #F3F5F0;
+    position: relative;
+}
+
+.closebtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: black;
+  font-size: 35px;
+  cursor: pointer;
+}
+</style>
+<script>
+    document.getElementById('teaser_video').addEventListener('ended',myHandler,false);
+function myHandler(e) {
+    console.log('teaser_video looping');
+    setTimeout(function(){
+        document.getElementById('teaser_video').play();
+    }, 20000);
+}
+</script>
+</body>
+
+</html>
